@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PawVoyage | Home 2 (Interactive Ride Estimator)</title>
+    <meta name="description"
+        content="PawVoyage pet taxi and animal transport service - alternative homepage layout with an interactive ride & fare planner.">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/rtl.css">
+
+    <style>
+        /* Home 2 hero: dark photographic stage, split copy + floating collage */
+        .hero-photo {
+            position: relative;
+            min-height: 100vh;
+            isolation: isolate;
+            overflow: hidden;
+            text-align: left;
+            padding-block: clamp(130px, 13vw, 170px) clamp(90px, 9vw, 130px);
+            color: #fff;
+        }
+
+        .hero-photo::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: -2;
+            background-image: url('https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=1600&q=80');
+            background-size: cover;
+            background-position: center;
+            transform: scale(1.08);
+            filter: blur(3px) saturate(115%);
+        }
+
+        .hero-photo::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            background:
+                radial-gradient(48rem 32rem at 85% 20%, rgba(45, 212, 191, 0.32), transparent 60%),
+                radial-gradient(42rem 30rem at 10% 90%, rgba(217, 119, 36, 0.35), transparent 60%),
+                linear-gradient(115deg, rgba(10, 22, 19, 0.93) 0%, rgba(12, 26, 23, 0.80) 45%, rgba(12, 26, 23, 0.58) 100%);
+        }
+
+        .hero-split {
+            display: grid;
+            grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+            gap: clamp(32px, 5vw, 72px);
+            align-items: center;
+        }
+
+        .hero-centered .hero-copy { margin: 0; max-width: 600px; }
+        .hero-copy h1 {
+            color: #fff;
+            font-size: clamp(2.8rem, 6.2vw, 5.4rem);
+            line-height: 1.02;
+        }
+        .hero-centered .hero-copy .lead-text {
+            margin-inline: 0;
+            color: rgba(255, 255, 255, 0.82);
+            font-size: clamp(1.05rem, 1.4vw, 1.25rem);
+        }
+        .hero-ctas { margin-top: 32px; }
+
+        .btn-ghost-light {
+            background: rgba(255, 255, 255, 0.12);
+            color: #fff;
+            border-color: rgba(255, 255, 255, 0.32);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+        }
+        .btn-ghost-light:hover { background: rgba(255, 255, 255, 0.22); color: #fff; }
+
+        .hero-trust {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-top: 36px;
+            padding-top: 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.16);
+        }
+        .hero-trust p { margin: 0; color: rgba(255, 255, 255, 0.8); font-size: 0.95rem; }
+        .hero-trust strong { color: #fff; }
+        .trust-avatars { display: flex; }
+        .trust-avatars img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #0e1f1b;
+            margin-inline-start: -10px;
+        }
+        .trust-avatars img:first-child { margin-inline-start: 0; }
+
+        /* Collage */
+        .hero-collage {
+            position: relative;
+            aspect-ratio: 1 / 1;
+            width: 100%;
+            max-width: 540px;
+            justify-self: end;
+        }
+        .hero-collage .tile {
+            position: absolute;
+            object-fit: cover;
+            border: 4px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.6);
+        }
+        .tile-main {
+            top: 8%;
+            left: 4%;
+            width: 80%;
+            height: 82%;
+            border-radius: 42% 58% 55% 45% / 48% 42% 58% 52%;
+            animation: h2-bob 8s ease-in-out infinite alternate;
+        }
+        .tile-top {
+            top: 0;
+            right: 0;
+            width: 38%;
+            aspect-ratio: 1;
+            border-radius: 28px;
+            transform: rotate(6deg);
+            animation: h2-bob 7s ease-in-out -2s infinite alternate;
+        }
+        .tile-bottom {
+            bottom: 2%;
+            right: 6%;
+            width: 34%;
+            aspect-ratio: 1;
+            border-radius: 50%;
+            animation: h2-bob 9s ease-in-out -4s infinite alternate;
+        }
+
+        .float-chip {
+            position: absolute;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.95);
+            color: #122420;
+            font-weight: 600;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            box-shadow: 0 18px 40px -12px rgba(0, 0, 0, 0.5);
+            animation: h2-bob 6s ease-in-out -1s infinite alternate;
+        }
+        .float-chip i { color: var(--color-primary); font-size: 1.1rem; }
+        .chip-a { top: 14%; left: -4%; }
+        .chip-b { bottom: 8%; left: 8%; animation-delay: -3s; }
+
+        /* Accent dots */
+        .paint-dot {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(1px);
+            opacity: 0.85;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .dot-1 { width: 22px; height: 22px; background: #5EEAD4; top: 22%; left: 46%; }
+        .dot-2 { width: 14px; height: 14px; background: #FBBF24; top: 70%; left: 4%; }
+        .dot-3 { width: 30px; height: 30px; background: #F472B6; bottom: 12%; left: 52%; }
+
+        .scroll-cue {
+            position: absolute;
+            left: 50%;
+            bottom: 28px;
+            transform: translateX(-50%);
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            animation: h2-bob 2.4s ease-in-out infinite alternate;
+        }
+
+        @keyframes h2-bob {
+            from { translate: 0 0; }
+            to   { translate: 0 -12px; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .hero-collage .tile, .float-chip, .scroll-cue { animation: none; }
+        }
+
+        /* Smooth word rotator */
+        .rotator {
+            display: inline-grid;
+            vertical-align: bottom;
+            text-align: start;
+        }
+
+        .rotator>span {
+            grid-area: 1 / 1;
+            opacity: 0;
+            transform: translateY(0.35em);
+            transition: opacity 0.5s var(--ease-out-expo), transform 0.5s var(--ease-out-expo);
+            background: linear-gradient(135deg, #5EEAD4, #FBBF24);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+        }
+
+        .rotator>span.is-active {
+            opacity: 1;
+            transform: none;
+        }
+
+        @media (max-width: 1024px) {
+            .hero-photo { min-height: auto; padding-block: 128px 100px; }
+            .hero-split { grid-template-columns: 1fr; text-align: center; }
+            .hero-centered .hero-copy { margin: 0 auto; }
+            .hero-centered .hero-copy .lead-text { margin-inline: auto; }
+            .hero-ctas, .hero-trust { justify-content: center; }
+            .hero-collage { justify-self: center; max-width: 460px; }
+            .rotator { text-align: center; }
+        }
+
+        @media (max-width: 560px) {
+            .hero-photo { padding-block: 104px 90px; }
+            .hero-trust { flex-direction: column; gap: 10px; }
+            .float-chip { font-size: 0.78rem; padding: 8px 12px; }
+            .chip-a { left: 0; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header / Navbar -->
+    <header class="header">
+        <div class="container nav-container">
+            <a href="index.html" class="logo"><i class="ph-fill ph-paw-print"></i> PawVoyage</a>
+
+            <nav class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="home2.html" class="nav-link active">Home 2</a>
+                <a href="our-story.html" class="nav-link">Our Story</a>
+                <a href="services.html" class="nav-link">Services</a>
+                <a href="pricing.html" class="nav-link">Pricing</a>
+                <a href="charter-rides.html" class="nav-link">Charter Rides</a>
+                <a href="contact.html" class="nav-link">Contact</a>
+                <a href="dashboard.html" class="nav-link">Dashboard</a>
+            </nav>
+
+            <div class="nav-actions">
+                <button class="icon-btn rtl-toggle" aria-label="Toggle RTL" title="Toggle Right-to-Left">
+                    <i class="ph ph-arrows-left-right"></i>
+                </button>
+                <div class="desktop-auth">
+                    <button class="icon-btn theme-toggle" aria-label="Toggle Dark Mode">
+                        <i class="ph ph-moon"></i>
+                    </button>
+                    <a href="login.html" class="btn btn-primary">Login</a>
+                </div>
+                <button class="hamburger" aria-label="Menu">
+                    <i class="ph ph-list"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Drawer -->
+    <div class="drawer-overlay"></div>
+    <div class="mobile-drawer">
+        <div class="drawer-header">
+            <a href="index.html" class="logo"><i class="ph-fill ph-paw-print"></i> PawVoyage</a>
+            <button class="drawer-close" aria-label="Close Menu">
+                <i class="ph ph-x"></i>
+            </button>
+        </div>
+        <nav class="mobile-nav-links">
+            <a href="index.html" class="mobile-nav-link">Home</a>
+            <a href="home2.html" class="mobile-nav-link active" aria-current="page">Home 2</a>
+            <a href="our-story.html" class="mobile-nav-link">Our Story</a>
+            <a href="services.html" class="mobile-nav-link">Services</a>
+            <a href="pricing.html" class="mobile-nav-link">Pricing</a>
+            <a href="charter-rides.html" class="mobile-nav-link">Charter Rides</a>
+            <a href="contact.html" class="mobile-nav-link">Contact</a>
+            <a href="dashboard.html" class="mobile-nav-link">Dashboard</a>
+        </nav>
+        <div class="mobile-actions">
+            <button class="icon-btn theme-toggle" aria-label="Toggle Dark Mode">
+                <i class="ph ph-moon"></i>
+            </button>
+            <button class="icon-btn rtl-toggle" aria-label="Toggle RTL">
+                <i class="ph ph-arrows-left-right"></i>
+            </button>
+        </div>
+        <a href="login.html" class="btn btn-primary drawer-login"><i class="ph ph-sign-in"></i> Login</a>
+    </div>
+
+    <main class="home-main">
+        <!-- Hero: dark photo stage, split copy + floating photo collage -->
+        <section class="hero hero-centered hero-photo">
+            <div class="container hero-split">
+                <div class="hero-content hero-copy">
+                    <span class="eyebrow on-dark reveal"><i class="ph-fill ph-paw-print"></i> Metro &amp; Interstate &middot; All Breeds</span>
+                    <h1 class="reveal delay-1">
+                        Ready to<br>
+                        <span class="rotator">
+                            <span class="is-active">Travel.</span>
+                            <span aria-hidden="true">Explore.</span>
+                            <span aria-hidden="true">Arrive.</span>
+                            <span aria-hidden="true">Relax.</span>
+                        </span>
+                    </h1>
+                    <p class="lead-text reveal delay-2">The premier door-to-door pet taxi and animal transport service engineered for safety, calm comfort, and complete owner peace of mind.</p>
+                    <div class="flex flex-wrap gap-2 hero-ctas reveal delay-3">
+                        <a href="#planner" class="btn btn-primary btn-lg">Estimate your ride <i
+                                class="ph ph-arrow-down"></i></a>
+                        <a href="charter-rides.html" class="btn btn-lg btn-ghost-light">Book private charter</a>
+                    </div>
+                    <div class="hero-trust reveal delay-4">
+                        <div class="trust-avatars" aria-hidden="true">
+                            <img src="assets/images/testimonial-avatar-priya-n.jpg" alt="">
+                            <img src="assets/images/testimonial-avatar-tom-aoife-b.jpg" alt="">
+                            <img src="assets/images/testimonial-avatar-danielle-o.jpg" alt="">
+                        </div>
+                        <p><strong>4.9/5</strong> from 2,400+ devoted pet families</p>
+                    </div>
+                </div>
+
+                <div class="hero-collage reveal delay-2" aria-hidden="true">
+                    <img class="tile tile-main" src="https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&w=900&q=80" alt="">
+                    <img class="tile tile-top" src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=600&q=80" alt="">
+                    <img class="tile tile-bottom" src="https://images.unsplash.com/photo-1517849845537-4d257902454a?auto=format&fit=crop&w=600&q=80" alt="">
+                </div>
+            </div>
+        </section>
+
+        <!-- Highlight cards -->
+        <section class="container">
+            <div class="section-header">
+                <span class="eyebrow reveal"><i class="ph-fill ph-seal-check"></i> Why PawVoyage</span>
+                <h2 class="reveal delay-1">Built around your companion</h2>
+                <p class="lead-text reveal delay-2">Three essentials every pet owner asks about before booking their first ride.</p>
+            </div>
+
+            <div class="grid grid-3">
+                <div class="card reveal delay-1">
+                    <div class="card-media">
+                        <img src="https://images.unsplash.com/photo-1534361960057-19889db9621e?auto=format&fit=crop&w=900&q=80"
+                            alt="Happy puppy ready for safe transport" loading="lazy">
+                    </div>
+                    <div class="card-icon coral"><i class="ph-fill ph-paw-print"></i></div>
+                    <h3>All Breeds &amp; Sizes</h3>
+                    <p>Custom-fitted suites for kittens, toy breeds, senior retrievers, and giant companions.</p>
+                </div>
+                <div class="card reveal delay-2">
+                    <div class="card-media">
+                        <img src="https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&w=900&q=80"
+                            alt="Calm beagle riding safely in a climate-controlled pet van" loading="lazy">
+                    </div>
+                    <div class="card-icon"><i class="ph-fill ph-navigation-arrow"></i></div>
+                    <h3>Live GPS Telemetry</h3>
+                    <p>Follow your pet&rsquo;s route, cabin climate, and arrival photos in real time on your phone.</p>
+                </div>
+                <div class="card reveal delay-3">
+                    <div class="card-media">
+                        <img src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?auto=format&fit=crop&w=900&q=80"
+                            alt="Pet owner and dog greeting their chauffeur curbside" loading="lazy">
+                    </div>
+                    <div class="card-icon pink"><i class="ph-fill ph-calendar-check"></i></div>
+                    <h3>Easy Portal Booking</h3>
+                    <p>Schedule rides, track active trips, and manage passes effortlessly in the owner portal.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================
+             INTERACTIVE: Ride & Fare Planner
+             ============================================================ -->
+        <section class="container" id="planner">
+            <div class="section-header">
+                <span class="eyebrow reveal"><i class="ph-fill ph-cursor-click"></i> Interactive</span>
+                <h2 class="reveal delay-1">Build your pet&rsquo;s custom ride</h2>
+                <p class="lead-text reveal delay-2">Tap through the four steps to configure your trip &mdash;
+                    estimated fare, cabin setup, and care level update live.</p>
+            </div>
+
+            <div class="planner reveal delay-2" data-planner>
+                <!-- Steps -->
+                <div class="planner-steps">
+
+                    <div class="planner-step">
+                        <div class="planner-step-head">
+                            <span class="planner-step-num">1</span>
+                            <h4>What size is your passenger?</h4>
+                        </div>
+                        <div class="option-grid">
+                            <button class="option-card" type="button" data-age="0-12m" data-label="Small (&lt; 15 lbs)"
+                                aria-pressed="false">
+                                <strong>Small (&lt; 15 lbs)</strong>
+                                <small>Cats, toy breeds &amp; rabbits</small>
+                            </button>
+                            <button class="option-card" type="button" data-age="1-2y" data-label="Medium (15&ndash;45 lbs)"
+                                data-default aria-pressed="false">
+                                <strong>Medium (15&ndash;45 lbs)</strong>
+                                <small>Spaniels, beagles &amp; corgis</small>
+                            </button>
+                            <button class="option-card" type="button" data-age="2-3y" data-label="Large (45&ndash;85 lbs)"
+                                aria-pressed="false">
+                                <strong>Large (45&ndash;85 lbs)</strong>
+                                <small>Retrievers &amp; shepherds</small>
+                            </button>
+                            <button class="option-card" type="button" data-age="3-4y" data-label="Giant / Multi-Pet"
+                                aria-pressed="false">
+                                <strong>Giant / Multi-Pet</strong>
+                                <small>85+ lbs or 2 household pets</small>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="planner-step">
+                        <div class="planner-step-head">
+                            <span class="planner-step-num">2</span>
+                            <h4>Which cabin services do you need?</h4>
+                        </div>
+                        <div class="option-grid">
+                            <button class="option-card" type="button" data-zone="art" data-label="Door-to-Door Escort"
+                                data-price="6" data-default aria-pressed="false">
+                                <strong>Door-to-Door Escort</strong>
+                                <small>+$6 &middot; clinic check-in</small>
+                            </button>
+                            <button class="option-card" type="button" data-zone="light" data-label="Vet Wait &amp; Return"
+                                data-price="5" aria-pressed="false">
+                                <strong>Vet Wait &amp; Return</strong>
+                                <small>+$5 &middot; chauffeur waits</small>
+                            </button>
+                            <button class="option-card" type="button" data-zone="texture" data-label="Orthopedic Suite"
+                                data-price="4" aria-pressed="false">
+                                <strong>Orthopedic Suite</strong>
+                                <small>+$4 &middot; memory-foam bed</small>
+                            </button>
+                            <button class="option-card" type="button" data-zone="water" data-label="Hydraulic Ramp"
+                                data-price="5" aria-pressed="false">
+                                <strong>Hydraulic Ramp</strong>
+                                <small>+$5 &middot; senior mobility</small>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="planner-step">
+                        <div class="planner-step-head">
+                            <span class="planner-step-num">3</span>
+                            <h4>What is the trip distance tier?</h4>
+                        </div>
+                        <div class="option-grid">
+                            <button class="option-card" type="button" data-length="45" data-multiplier="0.8"
+                                data-label="Local (&lt; 8 mi)" aria-pressed="false">
+                                <strong>Local (&lt; 8 mi)</strong>
+                                <small>Neighborhood hop</small>
+                            </button>
+                            <button class="option-card" type="button" data-length="60" data-multiplier="1"
+                                data-label="Metro (8&ndash;20 mi)" data-default aria-pressed="false">
+                                <strong>Metro (8&ndash;20 mi)</strong>
+                                <small>Most popular</small>
+                            </button>
+                            <button class="option-card" type="button" data-length="90" data-multiplier="1.4"
+                                data-label="Regional (20&ndash;45 mi)" aria-pressed="false">
+                                <strong>Regional (20&ndash;45 mi)</strong>
+                                <small>Extended transfer</small>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="planner-step">
+                        <div class="planner-step-head">
+                            <span class="planner-step-num">4</span>
+                            <h4>Any comfort add-ons?</h4>
+                        </div>
+                        <div class="option-grid">
+                            <button class="option-card" type="button" data-extra="photos" data-label="Live Cabin Cam"
+                                data-price="12" aria-pressed="false">
+                                <strong>Live Cabin Cam</strong>
+                                <small>+$12 &middot; HD stream link</small>
+                            </button>
+                            <button class="option-card" type="button" data-extra="smock" data-label="Pheromone Calm Mist"
+                                data-price="9" aria-pressed="false">
+                                <strong>Pheromone Calm Mist</strong>
+                                <small>+$9 &middot; Adaptil / Feliway</small>
+                            </button>
+                            <button class="option-card" type="button" data-extra="quiet" data-label="Silent Acoustic Mode"
+                                data-price="0" aria-pressed="false">
+                                <strong>Silent Acoustic Mode</strong>
+                                <small>Free &middot; zero road noise</small>
+                            </button>
+                            <button class="option-card" type="button" data-extra="snack" data-label="Hydration &amp; Treat Pack"
+                                data-price="7" aria-pressed="false">
+                                <strong>Hydration &amp; Treat Pack</strong>
+                                <small>+$7 &middot; allergy-safe</small>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Live summary -->
+                <aside class="planner-summary">
+                    <span class="eyebrow on-dark"><i class="ph-fill ph-receipt"></i> Your trip</span>
+                    <h3>Ride fare summary</h3>
+
+                    <dl style="margin-top: 20px;">
+                        <div class="summary-line">
+                            <dt>Pet size</dt>
+                            <dd data-out-age>&mdash;</dd>
+                        </div>
+                        <div class="summary-line">
+                            <dt>Cabin services</dt>
+                            <dd data-out-zones>&mdash;</dd>
+                        </div>
+                        <div class="summary-line">
+                            <dt>Distance tier</dt>
+                            <dd data-out-length>&mdash;</dd>
+                        </div>
+                        <div class="summary-line">
+                            <dt>Add-ons</dt>
+                            <dd data-out-extras>None</dd>
+                        </div>
+                    </dl>
+
+                    <div class="summary-total">
+                        <span>Estimated fare</span>
+                        <span class="summary-price" data-out-price>$30</span>
+                    </div>
+
+                    <div class="meter">
+                        <div class="meter-head">
+                            <span>Care concierge level</span>
+                            <strong data-out-meter-label>Standard Care</strong>
+                        </div>
+                        <div class="meter-track">
+                            <div class="meter-fill" data-out-meter></div>
+                        </div>
+                    </div>
+
+                    <div class="summary-note">
+                        <i class="ph-fill ph-info"></i>
+                        <span data-out-note>Select one or more cabin services and we will tailor the safest route for your pet.</span>
+                    </div>
+
+                    <a href="pricing.html" class="btn btn-primary btn-full">Reserve this ride <i
+                            class="ph ph-arrow-right"></i></a>
+                    <p
+                        style="font-size: var(--size-caption); color: rgba(230,242,238,0.58); text-align: center; margin-top: 12px;">
+                        Indicative fare. Exact mileage confirmed at checkout.</p>
+                </aside>
+            </div>
+        </section>
+
+        <!-- Gallery / Fleet Cabins -->
+        <section class="container">
+            <div class="section-header">
+                <span class="eyebrow reveal"><i class="ph-fill ph-van"></i> Inside the Fleet</span>
+                <h2 class="reveal delay-1">Our specialist pet cabins</h2>
+                <p class="lead-text reveal delay-2">Two custom vehicle configurations, each engineered for a distinct travel need &mdash;
+                    from quick urban clinic hops to long-distance relocations.</p>
+            </div>
+            <div class="grid grid-2">
+                <div class="tile reveal delay-1">
+                    <div class="tile-media">
+                        <img src="https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&w=900&q=80" alt="Luxury pet shuttle interior" loading="lazy">
+                    </div>
+                    <div class="tile-caption">
+                        <h3>Urban Vet &amp; Daycare Cruiser</h3>
+                        <p>Fast, nimble hybrid vans with crash-tested harness seating, HEPA air filtration, and curb-level boarding.</p>
+                    </div>
+                </div>
+                <div class="tile reveal delay-2">
+                    <div class="tile-media">
+                        <img src="https://images.unsplash.com/photo-1558788353-f76d92427f16?auto=format&fit=crop&w=900&q=80" alt="Long distance pet relocation sprinter" loading="lazy">
+                    </div>
+                    <div class="tile-caption">
+                        <h3>Long-Distance Charter Sprinter</h3>
+                        <p>Spacious walk-in suites with orthopedic memory-foam beds, live cabin webcams, and dual climate zones.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gallery -->
+        <section class="container" id="gallery">
+            <div class="section-header">
+                <span class="eyebrow reveal"><i class="ph-fill ph-camera"></i> Happy Riders</span>
+                <h2 class="reveal delay-1">A morning on the road with PawVoyage</h2>
+                <p class="lead-text reveal delay-2">Wagging tails, purring passengers, and stress-free arrivals across the city.
+                </p>
+            </div>
+
+            <div class="gallery gallery-uniform reveal delay-2">
+                <figure class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&w=900&q=80"
+                        alt="Golden retriever ready for morning pickup" loading="lazy">
+                    <figcaption>First morning pickup of the route</figcaption>
+                </figure>
+                <figure class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=900&q=80"
+                        alt="Cat relaxing in a quiet acoustic carrier suite" loading="lazy">
+                    <figcaption>Feline-only quiet acoustic cabin</figcaption>
+                </figure>
+                <figure class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1517849845537-4d257902454a?auto=format&fit=crop&w=900&q=80" alt="Pug enjoying climate controlled air"
+                        loading="lazy">
+                    <figcaption>68&deg;F climate-controlled ride</figcaption>
+                </figure>
+                <figure class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1573865526739-10659fec78a5?auto=format&fit=crop&w=900&q=80" alt="Tabby cat arriving safely at the vet"
+                        loading="lazy">
+                    <figcaption>Stress-free vet check-in</figcaption>
+                </figure>
+                <figure class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=900&q=80"
+                        alt="Two dogs arriving at daycare park shuttle" loading="lazy">
+                    <figcaption>Sibling daycare shuttle arrival</figcaption>
+                </figure>
+                <figure class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1596492784531-6e6eb5ea9993?auto=format&fit=crop&w=900&q=80"
+                        alt="Fluffy white dog resting on orthopedic bedding" loading="lazy">
+                    <figcaption>Orthopedic suite comfort break</figcaption>
+                </figure>
+            </div>
+        </section>
+
+        <!-- Testimonials -->
+        <section class="container">
+            <div class="section-header">
+                <span class="eyebrow reveal"><i class="ph-fill ph-chat-teardrop-text"></i> Reviews</span>
+                <h2 class="reveal delay-1">What pet parents tell us after</h2>
+                <p class="lead-text reveal delay-2">Real feedback from owners who track their pets from pickup to drop-off.</p>
+            </div>
+
+            <div class="grid grid-3">
+                <div class="card testimonial reveal delay-1">
+                    <div class="testimonial-stars" aria-label="Rated 5 out of 5">
+                        <i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i
+                            class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i>
+                    </div>
+                    <p>&ldquo;I booked the Silent Acoustic Mode for my senior Persian cat and she purred the entire forty-minute ride to the specialist clinic.&rdquo;</p>
+                    <div class="testimonial-author">
+                        <img class="testimonial-avatar" src="assets/images/testimonial-avatar-priya-n.jpg" alt=""
+                            loading="lazy">
+                        <div>
+                            <strong style="color: var(--color-primary);">Priya N.</strong>
+                            <span>Cat mum of Cleo</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card testimonial reveal delay-2">
+                    <div class="testimonial-stars" aria-label="Rated 5 out of 5">
+                        <i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i
+                            class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i>
+                    </div>
+                    <p>&ldquo;Two energetic labs and we both work full-time. PawVoyage picks them up for daycare and drops them home happy and safe every Tuesday and Thursday.&rdquo;</p>
+                    <div class="testimonial-author">
+                        <img class="testimonial-avatar" src="assets/images/testimonial-avatar-tom-aoife-b.jpg" alt=""
+                            loading="lazy">
+                        <div>
+                            <strong style="color: var(--color-secondary);">Tom &amp; Aoife B.</strong>
+                            <span>Dog parents of two</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card testimonial reveal delay-3">
+                    <div class="testimonial-stars" aria-label="Rated 5 out of 5">
+                        <i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i
+                            class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i>
+                    </div>
+                    <p>&ldquo;Our veterinary surgeon recommended PawVoyage after our dog&rsquo;s knee surgery. The hydraulic ramp and orthopedic litter made every follow-up visit effortless.&rdquo;</p>
+                    <div class="testimonial-author">
+                        <img class="testimonial-avatar" src="assets/images/testimonial-avatar-danielle-o.jpg" alt=""
+                            loading="lazy">
+                        <div>
+                            <strong style="color: var(--color-accent);">Danielle O.</strong>
+                            <span>Bernese Mountain Dog owner</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="container">
+            <div class="cta-banner reveal">
+                <span class="eyebrow on-dark"><i class="ph-fill ph-ticket"></i> Single ride or commuter pass</span>
+                <h2>Your pet&rsquo;s first ride is unhurried</h2>
+                <p class="lead-text">We build in extra curbside greeting time so your pet can sniff, settle, and board at their own pace.
+                </p>
+                <a href="pricing.html" class="btn btn-light btn-lg">See fares &amp; passes</a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo">
+                        <i class="ph-fill ph-paw-print"></i> PawVoyage
+                    </a>
+                    <p>Caring, climate-controlled, and vet-approved door-to-door pet taxi and animal transport service.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link" aria-label="Instagram"><i
+                                class="ph-fill ph-instagram-logo"></i></a>
+                        <a href="#" class="social-link" aria-label="Facebook"><i
+                                class="ph-fill ph-facebook-logo"></i></a>
+                        <a href="#" class="social-link" aria-label="TikTok"><i class="ph-fill ph-tiktok-logo"></i></a>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="footer-heading">Explore</h4>
+                    <ul class="footer-links">
+                        <li><a href="pricing.html">Pricing</a></li>
+                        <li><a href="charter-rides.html">Charter Rides</a></li>
+                        <li><a href="our-story.html">Our Story</a></li>
+                        <li><a href="services.html">Services</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="footer-heading">Support</h4>
+                    <ul class="footer-links">
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="dashboard.html">Dashboard</a></li>
+                        <li><a href="login.html">Owner Login</a></li>
+                        <li><a href="register.html">Sign Up</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="footer-heading">Dispatch Hub</h4>
+                    <ul class="footer-links" style="color: var(--color-text-muted);">
+                        <li style="margin-bottom: 10px;"><i class="ph ph-map-pin"></i> 742 Evergreen Transit Way, Metro City</li>
+                        <li style="margin-bottom: 10px;"><i class="ph ph-phone"></i> (555) 234-PAWS</li>
+                        <li><i class="ph ph-clock"></i> Daily: 6am &ndash; 10pm (24/7 Vet Emergency)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 PawVoyage Pet Taxi &amp; Animal Transport Service. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="assets/js/main.js"></script>
+    <script>
+        // Hero word rotator
+        (function () {
+            const words = document.querySelectorAll('.rotator > span');
+            if (words.length < 2) return;
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+            let i = 0;
+            setInterval(function () {
+                words[i].classList.remove('is-active');
+                i = (i + 1) % words.length;
+                words[i].classList.add('is-active');
+            }, 2600);
+        })();
+    </script>
+</body>
+
+</html>

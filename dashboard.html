@@ -1,0 +1,1389 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PawVoyage | Pet Owner Dashboard</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/rtl.css">
+
+    <style>
+        :root {
+            --dash-bar-h: 76px;
+            --dash-sidebar-w: 280px;
+        }
+
+        /* ---------------------------------------------------------------
+           Dashboard top bar
+           --------------------------------------------------------------- */
+        .dash-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: var(--dash-bar-h);
+            z-index: 1000;
+            background-color: var(--color-surface);
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .dash-bar {
+            display: flex;
+            align-items: center;
+            height: 100%;
+        }
+
+        .dash-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            height: 100%;
+            width: var(--dash-sidebar-w);
+            flex-shrink: 0;
+            padding-inline: var(--spacing-3);
+            border-inline-end: 1px solid var(--color-border);
+        }
+
+        .dash-bar-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-inline-start: auto;
+            padding-inline: var(--spacing-4);
+        }
+
+        .dash-bar .icon-btn {
+            background-color: var(--color-bg);
+            box-shadow: none;
+        }
+
+        .dash-bar .icon-btn:hover {
+            background-color: var(--color-surface-hover);
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* Profile button + avatar image + menu */
+        .profile-menu {
+            position: relative;
+        }
+
+        .profile-btn {
+            width: 42px;
+            height: 42px;
+            padding: 0;
+            overflow: hidden;
+            border-radius: 50%;
+            background-color: var(--color-primary-soft);
+            border: 2px solid var(--color-primary);
+            color: var(--color-primary);
+            display: grid;
+            place-items: center;
+            cursor: pointer;
+            transition: box-shadow var(--transition-fast), transform var(--transition-bounce);
+        }
+
+        .profile-btn img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            display: block;
+        }
+
+        .profile-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .profile-btn[aria-expanded="true"] {
+            box-shadow: 0 0 0 3px var(--color-primary-soft);
+        }
+
+        .profile-dropdown {
+            position: absolute;
+            top: calc(100% + 12px);
+            inset-inline-end: 0;
+            min-width: 240px;
+            padding: 8px;
+            background-color: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-sm);
+            box-shadow: var(--shadow-lg);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-8px);
+            transition: opacity var(--transition-fast), transform var(--transition-fast), visibility var(--transition-fast);
+            z-index: 1002;
+        }
+
+        .profile-dropdown.open {
+            opacity: 1;
+            visibility: visible;
+            transform: none;
+        }
+
+        .profile-head {
+            padding: 8px 12px 12px;
+            margin-bottom: 6px;
+            border-bottom: 1px solid var(--color-border);
+            text-align: start;
+        }
+
+        .profile-head strong {
+            display: block;
+            font-size: var(--size-label);
+        }
+
+        .profile-head span {
+            font-size: var(--size-caption);
+            color: var(--color-text-muted);
+        }
+
+        .profile-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            padding: 10px 12px;
+            border: none;
+            border-radius: var(--radius-xs);
+            background: none;
+            color: var(--color-text);
+            font-family: var(--font-body);
+            font-size: var(--size-label);
+            text-align: start;
+            cursor: pointer;
+            transition: background-color var(--transition-fast), color var(--transition-fast);
+        }
+
+        .profile-item i {
+            font-size: 1.15rem;
+        }
+
+        .profile-item:hover {
+            background-color: var(--color-surface-hover);
+            color: var(--color-primary);
+        }
+
+        .profile-item.danger {
+            color: var(--color-error);
+        }
+
+        .profile-item.danger:hover {
+            background-color: rgba(217, 83, 79, 0.1);
+            color: var(--color-error);
+        }
+
+        .dashboard-layout {
+            display: flex;
+            min-height: calc(100vh - var(--dash-bar-h));
+            margin-top: var(--dash-bar-h);
+        }
+
+        .dashboard-sidebar {
+            position: sticky;
+            top: var(--dash-bar-h);
+            align-self: flex-start;
+            width: var(--dash-sidebar-w);
+            height: calc(100vh - var(--dash-bar-h));
+            background-color: var(--color-surface);
+            border-inline-end: 1px solid var(--color-border);
+            padding: var(--spacing-4) var(--spacing-3);
+            flex-shrink: 0;
+            overflow-y: auto;
+            overscroll-behavior: contain;
+            transition: transform 0.3s ease;
+        }
+
+        .dashboard-nav-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            color: var(--color-text-muted);
+            border-radius: var(--radius-base);
+            margin-bottom: 8px;
+            font-weight: var(--weight-label);
+            transition: background-color var(--transition-fast), color var(--transition-fast);
+        }
+
+        .dashboard-nav-link:hover {
+            background-color: var(--color-surface-hover);
+            color: var(--color-primary);
+        }
+
+        .dashboard-nav-link.active {
+            background-color: var(--color-primary-soft);
+            color: var(--color-primary);
+        }
+
+        .dashboard-content {
+            flex-grow: 1;
+            padding: var(--spacing-5);
+            background-color: var(--color-bg);
+            overflow-y: auto;
+        }
+
+        .dashboard-section {
+            display: none;
+            animation: fadeIn 0.3s ease-out forwards;
+        }
+
+        .dashboard-section.active {
+            display: block;
+        }
+
+        .dashboard-content h1 {
+            font-size: clamp(1.7rem, 1.2rem + 1.4vw, 2.25rem);
+            line-height: 1.2;
+        }
+
+        .dashboard-content .lead-text {
+            font-size: var(--size-body);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Stat cards */
+        .stat-card {
+            background-color: var(--color-surface);
+            padding: var(--spacing-4);
+            border-radius: var(--radius-base);
+            border: 1px solid var(--color-border);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .stat-card .icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+        }
+
+        /* Time Slots mock */
+        .time-slots-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 16px;
+            margin-top: 24px;
+        }
+
+        .time-slot {
+            border: 2px solid var(--color-border);
+            border-radius: var(--radius-base);
+            padding: 16px;
+            text-align: center;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .time-slot.available:hover {
+            border-color: var(--color-secondary);
+            background-color: var(--color-secondary-soft);
+        }
+
+        .time-slot.unavailable {
+            opacity: 0.5;
+            cursor: not-allowed;
+            background-color: var(--color-surface-hover);
+        }
+
+        .time-slot.selected {
+            border-color: var(--color-primary);
+            background-color: var(--color-primary-soft);
+        }
+
+        .time-slot strong {
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .slot-capacity {
+            font-size: var(--size-caption);
+            color: var(--color-text-muted);
+        }
+
+        /* ---------------------------------------------------------------
+           Booking list
+           --------------------------------------------------------------- */
+        .booking-list {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .booking-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 14px;
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-sm);
+            background-color: var(--color-surface-2);
+            transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+        }
+
+        .booking-item:hover {
+            border-color: var(--color-border-strong);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .booking-date {
+            flex-shrink: 0;
+            width: 52px;
+            padding: 7px 0;
+            border-radius: 12px;
+            text-align: center;
+            line-height: 1.1;
+            background-color: var(--color-primary-soft);
+            color: var(--color-primary);
+        }
+
+        .booking-date .m {
+            display: block;
+            font-size: 0.66rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .booking-date .d {
+            display: block;
+            font-size: 1.15rem;
+            font-weight: 700;
+        }
+
+        .booking-body {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .booking-body strong {
+            display: block;
+            font-size: var(--size-label);
+            line-height: 1.3;
+        }
+
+        .booking-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2px 12px;
+            margin-top: 3px;
+            font-size: var(--size-caption);
+            color: var(--color-text-muted);
+        }
+
+        .booking-meta span {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .booking-item .btn {
+            flex-shrink: 0;
+            padding: 8px 16px;
+            min-height: 36px;
+            font-size: 0.85rem;
+        }
+
+        /* ---------------------------------------------------------------
+           Excursion Cards & Pet Profile Cards
+           --------------------------------------------------------------- */
+        .excursion-card {
+            padding: 0;
+            overflow: hidden;
+            align-items: stretch;
+            text-align: start;
+        }
+
+        .excursion-media {
+            position: relative;
+            aspect-ratio: 16 / 9;
+            width: 100%;
+            overflow: hidden;
+            background-color: var(--color-surface-hover);
+        }
+
+        .excursion-media img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 0;
+            transition: transform 0.8s var(--ease-out-expo);
+        }
+
+        .excursion-card:hover .excursion-media img {
+            transform: scale(1.05);
+        }
+
+        .excursion-badge {
+            position: absolute;
+            top: 12px;
+            inset-inline-start: 12px;
+            padding: 5px 12px;
+            border-radius: var(--radius-pill);
+            background: rgba(18, 36, 32, 0.82);
+            color: #fff;
+            font-size: 0.72rem;
+            font-weight: 640;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            -webkit-backdrop-filter: blur(8px);
+            backdrop-filter: blur(8px);
+        }
+
+        .excursion-body {
+            padding: var(--spacing-3);
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .excursion-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin: 12px 0 18px;
+            font-size: var(--size-caption);
+            color: var(--color-text-muted);
+        }
+
+        .excursion-meta span {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .excursion-meta i {
+            color: var(--color-primary);
+            font-size: 1rem;
+        }
+
+        .excursion-foot {
+            margin-top: auto;
+            padding-top: 14px;
+            border-top: 1px solid var(--color-border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .pet-card {
+            align-items: stretch;
+            text-align: start;
+        }
+
+        .pet-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            padding-bottom: 16px;
+            margin-bottom: 16px;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .pet-identity {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .pet-avatar {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+            border: 3px solid var(--color-primary-soft);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .pet-verified {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 4px;
+            padding: 3px 10px;
+            border-radius: var(--radius-pill);
+            background-color: var(--color-primary-soft);
+            color: var(--color-primary);
+            font-size: 0.72rem;
+            font-weight: 640;
+        }
+
+        .pet-specs {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .pet-spec-box {
+            padding: 10px 12px;
+            border-radius: var(--radius-xs);
+            background-color: var(--color-bg);
+            border: 1px solid var(--color-border);
+        }
+
+        .pet-spec-box span {
+            display: block;
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--color-text-muted);
+        }
+
+        .pet-spec-box strong {
+            font-size: var(--size-caption);
+            color: var(--color-ink);
+        }
+
+        /* ---------------------------------------------------------------
+           Billing
+           --------------------------------------------------------------- */
+        .pay-method {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 16px;
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-sm);
+            background-color: var(--color-surface-2);
+            margin-bottom: var(--spacing-4);
+        }
+
+        .pay-method-icon {
+            flex-shrink: 0;
+            width: 46px;
+            height: 32px;
+            display: grid;
+            place-items: center;
+            border-radius: 8px;
+            font-size: 1.25rem;
+            color: #fff;
+            background-image: linear-gradient(135deg, #0F766E, #122420);
+        }
+
+        .pay-method-body {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .pay-method-body strong {
+            display: block;
+            font-size: var(--size-label);
+        }
+
+        .pay-method-body small {
+            font-size: var(--size-caption);
+            color: var(--color-text-muted);
+        }
+
+        .pill {
+            flex-shrink: 0;
+            padding: 5px 12px;
+            border-radius: var(--radius-pill);
+            background-color: var(--color-success);
+            color: #fff;
+            font-size: 0.7rem;
+            font-weight: 640;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        .table-wrap {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        .txn-table {
+            width: 100%;
+            min-width: 420px;
+            text-align: left;
+            border-collapse: collapse;
+        }
+
+        .txn-table th {
+            padding: 10px 14px 10px 0;
+            border-bottom: 1px solid var(--color-border);
+            font-size: var(--size-eyebrow);
+            font-weight: 640;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--color-text-muted);
+            white-space: nowrap;
+        }
+
+        .txn-table td {
+            padding: 14px 14px 14px 0;
+            border-bottom: 1px solid var(--color-border);
+            font-size: var(--size-label);
+            white-space: nowrap;
+        }
+
+        .txn-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .txn-table tbody tr {
+            transition: background-color var(--transition-fast);
+        }
+
+        .txn-table tbody tr:hover {
+            background-color: var(--color-surface-hover);
+        }
+
+        .txn-table .col-date {
+            color: var(--color-text-muted);
+        }
+
+        .txn-table .col-amount {
+            font-weight: 620;
+        }
+
+        .txn-table .col-receipt {
+            padding-right: 0;
+            text-align: end;
+        }
+
+        /* Download receipt button */
+        .icon-action {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 11px;
+            border: 1px solid transparent;
+            color: var(--color-text-muted);
+            font-size: 1.15rem;
+            cursor: pointer;
+            transition: color var(--transition-fast), background-color var(--transition-fast),
+                border-color var(--transition-fast), box-shadow var(--transition-fast),
+                transform var(--transition-bounce);
+        }
+
+        .icon-action:hover,
+        .icon-action:focus-visible {
+            color: var(--color-primary);
+            background-color: var(--color-primary-soft);
+            border-color: var(--color-primary);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .icon-action:active {
+            transform: translateY(0);
+        }
+
+        .icon-action:hover i {
+            animation: dl-nudge 0.5s ease-in-out;
+        }
+
+        @keyframes dl-nudge {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            45% {
+                transform: translateY(3px);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .icon-action:hover i {
+                animation: none;
+            }
+        }
+
+        @media (max-width: 560px) {
+            .booking-item {
+                flex-wrap: wrap;
+            }
+
+            .booking-item .btn {
+                width: 100%;
+            }
+
+            .dashboard-content .card {
+                padding: var(--spacing-3);
+            }
+
+            .pet-specs {
+                grid-template-columns: 1fr;
+            }
+
+            .pay-method {
+                display: grid;
+                grid-template-columns: auto 1fr;
+                align-items: center;
+                gap: 10px 12px;
+            }
+
+            .pay-method-body {
+                grid-column: 2;
+            }
+
+            .pill {
+                grid-column: 2;
+                justify-self: start;
+            }
+
+            .txn-table,
+            .txn-table tbody,
+            .txn-table tr,
+            .txn-table td {
+                display: block;
+                width: 100%;
+            }
+
+            .txn-table {
+                min-width: 0;
+            }
+
+            .txn-table thead {
+                display: none;
+            }
+
+            .txn-table tbody tr {
+                padding: 12px 14px;
+                margin-bottom: 10px;
+                border: 1px solid var(--color-border);
+                border-radius: var(--radius-sm);
+                background-color: var(--color-surface-2);
+            }
+
+            .txn-table tbody tr:last-child {
+                margin-bottom: 0;
+            }
+
+            .txn-table td {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 12px;
+                padding: 4px 0;
+                border-bottom: none;
+                white-space: normal;
+            }
+
+            .txn-table td::before {
+                content: attr(data-label);
+                flex-shrink: 0;
+                font-size: var(--size-eyebrow);
+                font-weight: 640;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                color: var(--color-text-muted);
+            }
+
+            .txn-table .col-receipt {
+                text-align: start;
+                padding-top: 8px;
+            }
+        }
+
+        /* Mobile adjustments */
+        .dash-menu-toggle {
+            display: none;
+        }
+
+        @media (max-width: 1024px) {
+
+            .dash-brand {
+                width: auto;
+                border-inline-end: none;
+            }
+
+            .dash-menu-toggle {
+                display: inline-flex;
+            }
+
+            .dash-bar-actions {
+                padding-inline: var(--spacing-3);
+            }
+
+            .dashboard-sidebar {
+                position: fixed;
+                left: -100%;
+                top: var(--dash-bar-h);
+                height: calc(100vh - var(--dash-bar-h));
+                z-index: 999;
+                box-shadow: var(--shadow-xl);
+            }
+
+            .dashboard-sidebar.open {
+                left: 0;
+            }
+
+            [dir="rtl"] .dashboard-sidebar {
+                left: auto;
+                right: -100%;
+            }
+
+            [dir="rtl"] .dashboard-sidebar.open {
+                right: 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            :root {
+                --dash-bar-h: 68px;
+            }
+
+            .dash-brand {
+                padding-inline: var(--spacing-2);
+                gap: 8px;
+            }
+
+            .dash-bar-actions {
+                padding-inline: var(--spacing-2);
+                gap: 6px;
+            }
+
+            .dash-brand .logo {
+                font-size: 1.2rem;
+            }
+
+            .dash-brand .logo i {
+                width: 34px;
+                height: 34px;
+                font-size: 1.1rem;
+                border-radius: 11px;
+            }
+
+            .dash-bar .icon-btn,
+            .profile-btn {
+                width: 38px;
+                height: 38px;
+                font-size: 1rem;
+            }
+
+            .dashboard-content {
+                padding: var(--spacing-3);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="dash-header">
+        <div class="dash-bar">
+            <!-- Brand column (matches sidebar width on desktop) -->
+            <div class="dash-brand">
+                <button class="icon-btn dash-menu-toggle" aria-label="Toggle Dashboard Menu"><i
+                        class="ph ph-list"></i></button>
+                <a href="index.html" class="logo"><i class="ph-fill ph-paw-print"></i> PawVoyage</a>
+            </div>
+
+            <!-- Bar actions -->
+            <div class="dash-bar-actions">
+                <button class="icon-btn theme-toggle" aria-label="Toggle Dark Mode" title="Toggle dark mode">
+                    <i class="ph ph-moon"></i>
+                </button>
+                <button class="icon-btn rtl-toggle" aria-label="Toggle RTL" title="Toggle Right-to-Left">
+                    <i class="ph ph-arrows-left-right"></i>
+                </button>
+
+                <!-- Profile Pic right after RTL icon -->
+                <div class="profile-menu">
+                    <button class="profile-btn" id="profile-btn" aria-label="Account menu" aria-expanded="false"
+                        aria-haspopup="true" aria-controls="profile-dropdown" title="Sarah Thompson">
+                        <img src="assets/images/testimonial-avatar-sarah-t.jpg" alt="Sarah Thompson">
+                    </button>
+                    <div class="profile-dropdown" id="profile-dropdown" role="menu" aria-labelledby="profile-btn">
+                        <div class="profile-head">
+                            <strong>Sarah Thompson</strong>
+                            <span>sarah@example.com</span>
+                        </div>
+                        <a href="#" class="profile-item" role="menuitem" data-target="section-family"><i
+                                class="ph ph-paw-print"></i> My Pets</a>
+                        <a href="#" class="profile-item" role="menuitem" data-target="section-billing"><i
+                                class="ph ph-credit-card"></i> Payments &amp; Billing</a>
+                        <a href="#" class="profile-item" role="menuitem" data-target="section-settings"><i
+                                class="ph ph-gear"></i> Settings</a>
+                        <a href="index.html" class="profile-item" role="menuitem"><i class="ph ph-house"></i> Back to
+                            site</a>
+                        <a href="index.html" class="profile-item danger" role="menuitem"><i class="ph ph-sign-out"></i>
+                            Log out</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="dashboard-layout">
+
+        <!-- Sidebar -->
+        <aside class="dashboard-sidebar">
+            <h4
+                style="margin-bottom: 24px; color: var(--color-text-muted); font-size: var(--size-caption); text-transform: uppercase;">
+                Dashboard</h4>
+
+            <a href="#" class="dashboard-nav-link active" data-target="section-overview">
+                <i class="ph ph-squares-four"></i> Overview &amp; Tracking
+            </a>
+            <a href="#" class="dashboard-nav-link" data-target="section-book">
+                <i class="ph ph-calendar-plus"></i> Book a Ride
+            </a>
+            <a href="#" class="dashboard-nav-link" data-target="section-passes">
+                <i class="ph ph-ticket"></i> Ride Passes
+            </a>
+            <a href="#" class="dashboard-nav-link" data-target="section-events">
+                <i class="ph ph-van"></i> Group Excursions
+            </a>
+
+            <h4
+                style="margin-top: 32px; margin-bottom: 24px; color: var(--color-text-muted); font-size: var(--size-caption); text-transform: uppercase;">
+                Account</h4>
+
+            <a href="#" class="dashboard-nav-link" data-target="section-family">
+                <i class="ph ph-paw-print"></i> My Pets
+            </a>
+            <a href="#" class="dashboard-nav-link" data-target="section-billing">
+                <i class="ph ph-credit-card"></i> Payments &amp; Billing
+            </a>
+            <a href="#" class="dashboard-nav-link" data-target="section-settings">
+                <i class="ph ph-gear"></i> Settings
+            </a>
+            <a href="index.html" class="dashboard-nav-link" style="margin-top: auto; color: var(--color-error);">
+                <i class="ph ph-sign-out"></i> Logout
+            </a>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="dashboard-content">
+
+            <!-- OVERVIEW SECTION -->
+            <section id="section-overview" class="dashboard-section active" style="padding: 0;">
+                <h3 style="margin-bottom: 8px;">Welcome back, Sarah!</h3>
+                <p class="lead-text" style="margin-bottom: 32px;">Track your pet&rsquo;s trips, schedule upcoming rides, and manage your commuter passes.</p>
+
+                <div class="grid grid-3" style="margin-bottom: 40px;">
+                    <div class="stat-card">
+                        <div class="icon"
+                            style="background-color: var(--color-primary-soft); color: var(--color-primary);"><i
+                                class="ph-fill ph-ticket"></i></div>
+                        <div>
+                            <p style="margin: 0; font-size: var(--size-caption); color: var(--color-text-muted);">
+                                Remaining Rides</p>
+                            <h3 style="margin: 0;">8 <span style="font-size: 1rem; font-weight: normal;">(10-Ride
+                                    Pass)</span></h3>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="icon"
+                            style="background-color: var(--color-secondary-soft); color: var(--color-secondary);"><i
+                                class="ph-fill ph-navigation-arrow"></i></div>
+                        <div>
+                            <p style="margin: 0; font-size: var(--size-caption); color: var(--color-text-muted);">Next
+                                Scheduled Pickup</p>
+                            <h3 style="margin: 0;">Tomorrow, 10 AM</h3>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="icon"
+                            style="background-color: var(--color-accent-soft); color: var(--color-accent);"><i
+                                class="ph-fill ph-shield-check"></i></div>
+                        <div>
+                            <p style="margin: 0; font-size: var(--size-caption); color: var(--color-text-muted);">
+                                Safe Miles Logged</p>
+                            <h3 style="margin: 0;">450 mi</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-2">
+                    <div class="card" style="align-items: flex-start; text-align: left;">
+                        <h3>Upcoming Ride Bookings</h3>
+
+                        <div class="booking-list">
+                            <div class="booking-item">
+                                <div class="booking-date">
+                                    <span class="m">Oct</span>
+                                    <span class="d">24</span>
+                                </div>
+                                <div class="booking-body">
+                                    <strong>Vet Clinic Transfer (Wait &amp; Return)</strong>
+                                    <div class="booking-meta">
+                                        <span><i class="ph ph-clock"></i> 10:00 AM</span>
+                                        <span><i class="ph ph-paw-print"></i> Barnaby</span>
+                                    </div>
+                                </div>
+                                <button class="btn btn-outline">Track / Edit</button>
+                            </div>
+
+                            <div class="booking-item">
+                                <div class="booking-date">
+                                    <span class="m">Nov</span>
+                                    <span class="d">02</span>
+                                </div>
+                                <div class="booking-body">
+                                    <strong>Grooming Spa Shuttle</strong>
+                                    <div class="booking-meta">
+                                        <span><i class="ph ph-clock"></i> 01:00 PM</span>
+                                        <span><i class="ph ph-paw-print"></i> Cleo</span>
+                                    </div>
+                                </div>
+                                <button class="btn btn-outline">Track / Edit</button>
+                            </div>
+                        </div>
+
+                        <a href="#" class="dashboard-nav-link" style="padding: 0; margin-top: 16px;"
+                            data-target="section-book">Book another ride <i class="ph ph-arrow-right"></i></a>
+                    </div>
+
+                    <div class="card" style="align-items: flex-start; text-align: left;">
+                        <h3>Live Trip Telemetry &amp; Dispatch</h3>
+                        <div
+                            style="background-color: var(--color-surface-hover); padding: 16px; border-radius: var(--radius-base); width: 100%;">
+                            <strong>Assigned Chauffeur: Emma L. &middot; Cruiser #04</strong>
+                            <p style="margin-top: 4px; margin-bottom: 0; font-size: var(--size-caption);">Cabin pre-set to 68&deg;F with HEPA filtration &amp; orthopedic ramp ready. Live GPS map link and cabin cam stream activate 15 minutes before tomorrow&rsquo;s 10:00 AM pickup.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- BOOK A RIDE -->
+            <section id="section-book" class="dashboard-section" style="padding: 0;">
+                <h2>Book a Pet Ride</h2>
+                <div class="card" style="text-align: left; align-items: stretch; max-width: 800px;">
+                    <div class="grid grid-2" style="gap: 24px; margin-bottom: 24px;">
+                        <div class="form-group">
+                            <label class="form-label">Select Transport Service</label>
+                            <select id="booking-zone" class="form-control">
+                                <option value="">Choose a service...</option>
+                                <option value="messy">Veterinary &amp; Grooming Transfer</option>
+                                <option value="light">Airport &amp; Flight Transfer</option>
+                                <option value="tactile">Daycare Shuttle &amp; Senior Mobility</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Select Pickup Date</label>
+                            <input type="date" id="booking-date" class="form-control">
+                        </div>
+                    </div>
+
+                    <hr style="border: none; border-bottom: 1px solid var(--color-border); margin-bottom: 24px;">
+
+                    <label class="form-label">Available Dispatch Windows</label>
+                    <div id="time-slots" class="time-slots-grid">
+                        <p class="lead-text" style="grid-column: 1/-1;">Please select a service type and pickup date to view available chauffeurs.</p>
+                    </div>
+
+                    <div style="margin-top: 32px; display: flex; justify-content: flex-end;">
+                        <button id="btn-confirm-booking" class="btn btn-primary" disabled>Confirm Ride Booking</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- MY PASSES -->
+            <section id="section-passes" class="dashboard-section" style="padding: 0;">
+                <h2>My Ride Passes</h2>
+                <div class="grid grid-2">
+                    <div class="card"
+                        style="align-items: flex-start; text-align: left; border: 2px solid var(--color-primary);">
+                        <div
+                            style="display: flex; justify-content: space-between; width: 100%; align-items: center; margin-bottom: 16px;">
+                            <h3 style="margin: 0;">10-Ride Commuter Pass</h3>
+                            <span
+                                style="background-color: var(--color-success); color: white; padding: 4px 12px; border-radius: var(--radius-pill); font-size: var(--size-caption);">Active</span>
+                        </div>
+                        <div
+                            style="width: 100%; background-color: var(--color-border); height: 8px; border-radius: 4px; margin-bottom: 8px; overflow: hidden;">
+                            <div style="width: 20%; background-color: var(--color-primary); height: 100%;"></div>
+                        </div>
+                        <p style="font-size: var(--size-caption); color: var(--color-text-muted);">2 rides used, 8
+                            remaining. Expires April 2027.</p>
+                        <button class="btn btn-outline" style="margin-top: 16px;">View Trip History</button>
+                    </div>
+
+                    <div class="card"
+                        style="align-items: center; justify-content: center; border: 2px dashed var(--color-border); background: transparent; cursor: pointer;">
+                        <i class="ph ph-plus-circle"
+                            style="font-size: 3rem; color: var(--color-text-muted); margin-bottom: 16px;"></i>
+                        <h4>Purchase New Ride Pass</h4>
+                        <p style="color: var(--color-text-muted); font-size: var(--size-caption);">Top up rides or
+                            start a monthly commuter plan</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- GROUP EXCURSIONS -->
+            <section id="section-events" class="dashboard-section" style="padding: 0;">
+                <div style="margin-bottom: 24px;">
+                    <h2 style="margin-bottom: 6px;">Group Pet Excursions</h2>
+                    <p class="lead-text" style="margin: 0;">Curated weekend shuttle outings with certified handlers, individual crash-tested suites, and live photo updates.</p>
+                </div>
+
+                <div class="grid grid-3">
+                    <article class="card excursion-card">
+                        <div class="excursion-media">
+                            <img src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=800&q=80" alt="Dog Beach & Trail Shuttle">
+                            <span class="excursion-badge">3 Suites Left</span>
+                        </div>
+                        <div class="excursion-body">
+                            <h4 style="margin-bottom: 4px;">Coastal Dog Beach &amp; Trail Shuttle</h4>
+                            <p style="font-size: var(--size-caption); margin: 0;">Round-trip curbside pickup, 90-minute supervised coastal walk, and fresh towel-dry before return.</p>
+                            <div class="excursion-meta">
+                                <span><i class="ph-fill ph-calendar"></i> Sat, Oct 30 &middot; 9:00 AM &ndash; 12:30 PM</span>
+                                <span><i class="ph-fill ph-user-check"></i> Chauffeur: Emma L. (Cruiser #04)</span>
+                                <span><i class="ph-fill ph-paw-print"></i> Socialized Dogs &middot; Max 5 per van</span>
+                            </div>
+                            <div class="excursion-foot">
+                                <strong style="color: var(--color-primary); font-size: 1.15rem;">$38 <small style="font-weight: 400; color: var(--color-text-muted);">or 1 Pass Ride</small></strong>
+                                <button class="btn btn-primary btn-sm">Reserve Seat</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="card excursion-card">
+                        <div class="excursion-media">
+                            <img src="https://images.unsplash.com/photo-1534361960057-19889db9621e?auto=format&fit=crop&w=800&q=80" alt="Puppy Socialization Park Run">
+                            <span class="excursion-badge" style="background: rgba(217, 119, 36, 0.9);">2 Suites Left</span>
+                        </div>
+                        <div class="excursion-body">
+                            <h4 style="margin-bottom: 4px;">Puppy Confidence &amp; Meadow Run</h4>
+                            <p style="font-size: var(--size-caption); margin: 0;">Gentle small-group ride to fenced private turf for puppies under 12 months with a behaviourist on board.</p>
+                            <div class="excursion-meta">
+                                <span><i class="ph-fill ph-calendar"></i> Sun, Nov 01 &middot; 10:00 AM &ndash; 12:00 PM</span>
+                                <span><i class="ph-fill ph-user-check"></i> Chauffeur: Sarah J. (Behaviourist)</span>
+                                <span><i class="ph-fill ph-paw-print"></i> Puppies 4&ndash;12 mos &middot; Max 4 per van</span>
+                            </div>
+                            <div class="excursion-foot">
+                                <strong style="color: var(--color-primary); font-size: 1.15rem;">$34 <small style="font-weight: 400; color: var(--color-text-muted);">or 1 Pass Ride</small></strong>
+                                <button class="btn btn-primary btn-sm">Reserve Seat</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="card excursion-card">
+                        <div class="excursion-media">
+                            <img src="https://images.unsplash.com/photo-1544568100-847a948585b9?auto=format&fit=crop&w=800&q=80" alt="Senior Dog Gentle Botanical Stroll">
+                            <span class="excursion-badge" style="background: rgba(15, 118, 110, 0.9);">Ramp Van</span>
+                        </div>
+                        <div class="excursion-body">
+                            <h4 style="margin-bottom: 4px;">Senior Paws Botanical Stroll</h4>
+                            <p style="font-size: var(--size-caption); margin: 0;">Low-pace shaded park outing in our hydraulic-ramp orthopedic sprinter with hydration breaks every 20 mins.</p>
+                            <div class="excursion-meta">
+                                <span><i class="ph-fill ph-calendar"></i> Wed, Nov 04 &middot; 1:30 PM &ndash; 3:30 PM</span>
+                                <span><i class="ph-fill ph-user-check"></i> Chauffeur: David K. (Sprinter #07)</span>
+                                <span><i class="ph-fill ph-paw-print"></i> Seniors &amp; Mobility &middot; Max 4 per van</span>
+                            </div>
+                            <div class="excursion-foot">
+                                <strong style="color: var(--color-primary); font-size: 1.15rem;">$32 <small style="font-weight: 400; color: var(--color-text-muted);">or 1 Pass Ride</small></strong>
+                                <button class="btn btn-primary btn-sm">Reserve Seat</button>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <!-- MY PETS -->
+            <section id="section-family" class="dashboard-section" style="padding: 0;">
+                <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 24px;">
+                    <div>
+                        <h2 style="margin-bottom: 4px;">My Pets</h2>
+                        <p class="lead-text" style="margin: 0;">Keep vaccination records, vet clinics, and suite preferences updated for every chauffeur.</p>
+                    </div>
+                    <button class="btn btn-primary"><i class="ph ph-plus"></i> Add Another Pet</button>
+                </div>
+
+                <div class="grid grid-2">
+                    <!-- Pet 1: Barnaby -->
+                    <div class="card pet-card">
+                        <div class="pet-header">
+                            <div class="pet-identity">
+                                <img class="pet-avatar" src="https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&w=300&q=80" alt="Barnaby the Golden Retriever">
+                                <div>
+                                    <strong style="display: block; font-size: 1.15rem;">Barnaby</strong>
+                                    <span style="font-size: var(--size-caption); color: var(--color-text-muted); display: block;">Golden Retriever &middot; 3.5 yrs &middot; 68 lbs</span>
+                                    <span class="pet-verified"><i class="ph-fill ph-seal-check"></i> Vaccines Verified</span>
+                                </div>
+                            </div>
+                            <button class="icon-btn" aria-label="Edit Barnaby profile"><i class="ph ph-pencil-simple"></i></button>
+                        </div>
+
+                        <div class="pet-specs">
+                            <div class="pet-spec-box">
+                                <span>Primary Vet Clinic</span>
+                                <strong>Greenwood Vet Hospital</strong>
+                            </div>
+                            <div class="pet-spec-box">
+                                <span>Microchip ID</span>
+                                <strong>#985-112-0048</strong>
+                            </div>
+                            <div class="pet-spec-box">
+                                <span>Preferred Cabin</span>
+                                <strong>Ortho-Ramp + Harness XL</strong>
+                            </div>
+                            <div class="pet-spec-box">
+                                <span>Dietary / Treats</span>
+                                <strong>No Poultry (Salmon OK)</strong>
+                            </div>
+                        </div>
+
+                        <div>
+                            <strong style="font-size: var(--size-caption); text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-text-muted);">Handling Notes for Chauffeur</strong>
+                            <p style="margin-top: 6px; margin-bottom: 0; font-size: var(--size-label);">Prefers boarding via the hydraulic ramp. Very friendly with handlers; enjoys gentle ear scratches and 68&deg;F cabin airflow.</p>
+                        </div>
+                    </div>
+
+                    <!-- Pet 2: Cleo -->
+                    <div class="card pet-card">
+                        <div class="pet-header">
+                            <div class="pet-identity">
+                                <img class="pet-avatar" src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=300&q=80" alt="Cleo the Ragdoll Cat">
+                                <div>
+                                    <strong style="display: block; font-size: 1.15rem;">Cleo</strong>
+                                    <span style="font-size: var(--size-caption); color: var(--color-text-muted); display: block;">Ragdoll Cat &middot; 2 yrs &middot; 11 lbs</span>
+                                    <span class="pet-verified"><i class="ph-fill ph-seal-check"></i> Vaccines Verified</span>
+                                </div>
+                            </div>
+                            <button class="icon-btn" aria-label="Edit Cleo profile"><i class="ph ph-pencil-simple"></i></button>
+                        </div>
+
+                        <div class="pet-specs">
+                            <div class="pet-spec-box">
+                                <span>Primary Vet Clinic</span>
+                                <strong>Metro Feline Specialists</strong>
+                            </div>
+                            <div class="pet-spec-box">
+                                <span>Microchip ID</span>
+                                <strong>#985-112-0091</strong>
+                            </div>
+                            <div class="pet-spec-box">
+                                <span>Preferred Cabin</span>
+                                <strong>Feline Quiet Zone + Feliway</strong>
+                            </div>
+                            <div class="pet-spec-box">
+                                <span>Carrier Type</span>
+                                <strong>Anchored Hard-Shell M</strong>
+                            </div>
+                        </div>
+
+                        <div>
+                            <strong style="font-size: var(--size-caption); text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-text-muted);">Handling Notes for Chauffeur</strong>
+                            <p style="margin-top: 6px; margin-bottom: 0; font-size: var(--size-label);">Keep carrier covered with lavender fleece liner during curb walk. Requires Silent Acoustic Mode and separate feline cabin.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- BILLING -->
+            <section id="section-billing" class="dashboard-section" style="padding: 0;">
+                <h2>Payments &amp; Billing</h2>
+                <div class="card" style="text-align: left; align-items: stretch; max-width: 800px;">
+                    <h4 style="margin-bottom: 16px;">Payment Methods</h4>
+                    <div class="pay-method">
+                        <span class="pay-method-icon"><i class="ph-fill ph-credit-card"></i></span>
+                        <div class="pay-method-body">
+                            <strong>Visa ending in 4242</strong>
+                            <small>Expires 08 / 2028</small>
+                        </div>
+                        <span class="pill">Default</span>
+                    </div>
+
+                    <h4 style="margin-bottom: 16px;">Recent Transactions</h4>
+                    <div class="table-wrap">
+                        <table class="txn-table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Item</th>
+                                    <th scope="col">Amount</th>
+                                    <th scope="col" class="col-receipt">Receipt</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="col-date" data-label="Date">Oct 01, 2026</td>
+                                    <td data-label="Item">10-Ride Commuter Pass</td>
+                                    <td class="col-amount" data-label="Amount">$239.00</td>
+                                    <td class="col-receipt" data-label="Receipt">
+                                        <a href="#" class="icon-action" aria-label="Download receipt for 10-Ride Commuter Pass"
+                                            title="Download receipt"><i class="ph ph-download-simple"></i></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-date" data-label="Date">Sep 12, 2026</td>
+                                    <td data-label="Item">Single Vet Transfer</td>
+                                    <td class="col-amount" data-label="Amount">$29.00</td>
+                                    <td class="col-receipt" data-label="Receipt">
+                                        <a href="#" class="icon-action"
+                                            aria-label="Download receipt for Single Vet Transfer"
+                                            title="Download receipt"><i class="ph ph-download-simple"></i></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SETTINGS -->
+            <section id="section-settings" class="dashboard-section" style="padding: 0;">
+                <h2>Settings</h2>
+                <div class="card" style="text-align: left; align-items: stretch; max-width: 600px;">
+                    <form>
+                        <div class="form-group">
+                            <label class="form-label">Pet Owner Name</label>
+                            <input type="text" class="form-control" value="Sarah Thompson">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" value="sarah@example.com">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 24px;">
+                            <label class="form-label">Telemetry &amp; Notification Preferences</label>
+                            <div class="checkbox-wrap">
+                                <input type="checkbox" id="notif1" checked>
+                                <label for="notif1">Send live GPS tracking link &amp; cabin telemetry via SMS</label>
+                            </div>
+                            <div class="checkbox-wrap">
+                                <input type="checkbox" id="notif2" checked>
+                                <label for="notif2">Send photo confirmation upon clinic/home hand-off</label>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </form>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Need both scripts -->
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/dashboard.js"></script>
+</body>
+
+</html>
+

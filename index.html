@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PawVoyage | Caring Pet Taxi &amp; Animal Transport Service</title>
+    <meta name="description"
+        content="PawVoyage is a premium, vet-approved pet taxi and animal transport service. Book safe, climate-controlled rides for vet visits, grooming, daycare, and pet relocation.">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+
+    <!-- Icons (Phosphor Icons - Rounded Style) -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/rtl.css">
+
+    <!-- Structured Data for Local Business -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "PawVoyage Pet Taxi & Animal Transport",
+      "image": "https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=800&q=80",
+      "@id": "",
+      "url": "https://www.pawvoyage.com",
+      "telephone": "+15552347297",
+      "priceRange": "$$",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "742 Evergreen Transit Way",
+        "addressLocality": "Metro City",
+        "postalCode": "10012",
+        "addressCountry": "US"
+      }
+    }
+    </script>
+</head>
+
+<body>
+
+    <!-- Header / Navbar -->
+    <header class="header">
+        <div class="container nav-container">
+            <!-- Logo -->
+            <a href="index.html" class="logo">
+                <i class="ph-fill ph-paw-print"></i> PawVoyage
+            </a>
+
+            <!-- Desktop Nav Links -->
+            <nav class="nav-links">
+                <a href="index.html" class="nav-link active">Home</a>
+                <a href="home2.html" class="nav-link">Home 2</a>
+                <a href="our-story.html" class="nav-link">Our Story</a>
+                <a href="services.html" class="nav-link">Services</a>
+                <a href="pricing.html" class="nav-link">Pricing</a>
+                <a href="charter-rides.html" class="nav-link">Charter Rides</a>
+                <a href="contact.html" class="nav-link">Contact</a>
+                <a href="dashboard.html" class="nav-link">Dashboard</a>
+            </nav>
+
+            <!-- Actions -->
+            <div class="nav-actions">
+                <button class="icon-btn rtl-toggle" aria-label="Toggle RTL" title="Toggle Right-to-Left">
+                    <i class="ph ph-arrows-left-right"></i>
+                </button>
+                <div class="desktop-auth">
+                    <button class="icon-btn theme-toggle" aria-label="Toggle Dark Mode">
+                        <i class="ph ph-moon"></i>
+                    </button>
+                    <a href="login.html" class="btn btn-primary">Login</a>
+                </div>
+                <button class="hamburger" aria-label="Menu">
+                    <i class="ph ph-list"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Drawer -->
+    <div class="drawer-overlay"></div>
+    <div class="mobile-drawer">
+        <div class="drawer-header">
+            <a href="index.html" class="logo"><i class="ph-fill ph-paw-print"></i> PawVoyage</a>
+            <button class="drawer-close" aria-label="Close Menu">
+                <i class="ph ph-x"></i>
+            </button>
+        </div>
+        <nav class="mobile-nav-links">
+            <a href="index.html" class="mobile-nav-link active" aria-current="page">Home</a>
+            <a href="home2.html" class="mobile-nav-link">Home 2</a>
+            <a href="our-story.html" class="mobile-nav-link">Our Story</a>
+            <a href="services.html" class="mobile-nav-link">Services</a>
+            <a href="pricing.html" class="mobile-nav-link">Pricing</a>
+            <a href="charter-rides.html" class="mobile-nav-link">Charter Rides</a>
+            <a href="contact.html" class="mobile-nav-link">Contact</a>
+            <a href="dashboard.html" class="mobile-nav-link">Dashboard</a>
+        </nav>
+        <div class="mobile-actions">
+            <button class="icon-btn theme-toggle" aria-label="Toggle Dark Mode">
+                <i class="ph ph-moon"></i>
+            </button>
+            <button class="icon-btn rtl-toggle" aria-label="Toggle RTL">
+                <i class="ph ph-arrows-left-right"></i>
+            </button>
+        </div>
+        <a href="login.html" class="btn btn-primary drawer-login"><i class="ph ph-sign-in"></i> Login</a>
+    </div>
+
+    <main class="home-main">
+        <!-- Background Shapes -->
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+
+        <!-- Hero Section -->
+        <section class="hero container">
+            <div class="hero-content">
+                <span class="eyebrow reveal"><i class="ph-fill ph-shield-check"></i> 24/7 Pet Chauffeurs &middot; Metro &amp; Interstate</span>
+                <h1 class="reveal delay-1">Where every beloved pet enjoys <span class="text-gradient">safe travel</span></h1>
+                <p class="lead-text reveal delay-2">A caring, climate-controlled, vet-approved pet taxi and animal
+                    transport service. From routine clinic visits to airport transfers &mdash; we handle every mile with love.</p>
+                <div class="flex flex-wrap gap-2 reveal delay-3" style="margin-top: 32px;">
+                    <a href="pricing.html" class="btn btn-primary btn-lg">Book a Safe Ride <i
+                            class="ph ph-arrow-right"></i></a>
+                    <a href="#dispatch" class="btn btn-outline btn-lg">Preview Live Cabin</a>
+                </div>
+
+                <div class="hero-proof reveal delay-4">
+                    <div class="proof-stat">
+                        <span class="proof-value" data-count-to="18" data-count-suffix="k+">18k+</span>
+                        <span class="proof-label">Safe pet journeys</span>
+                    </div>
+                    <div class="proof-stat">
+                        <span class="proof-value" data-count-to="4.9" data-count-suffix="/5">4.9/5</span>
+                        <span class="proof-label">Pet owner rating</span>
+                    </div>
+                    <div class="proof-stat">
+                        <span class="proof-value" data-count-to="100" data-count-suffix="%">100%</span>
+                        <span class="proof-label">Live GPS tracked</span>
+                    </div>
+                </div>
+            </div>
+            <img src="https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?auto=format&fit=crop&w=1000&q=80" alt="Happy golden retriever enjoying a safe, comfortable pet taxi ride"
+                class="hero-image reveal delay-4">
+        </section>
+
+        <!-- Trust ticker -->
+        <div class="marquee" aria-hidden="true">
+            <div class="marquee-track">
+                <span class="marquee-item"><i class="ph-fill ph-thermometer-cold"></i> Climate-controlled cabins</span>
+                <span class="marquee-item"><i class="ph-fill ph-shield-check"></i> Vet-grade sanitization</span>
+                <span class="marquee-item"><i class="ph-fill ph-navigation-arrow"></i> Live GPS trip tracking</span>
+                <span class="marquee-item"><i class="ph-fill ph-certificate"></i> Pet CPR-certified drivers</span>
+                <span class="marquee-item"><i class="ph-fill ph-speaker-low"></i> Whisper-quiet acoustic vans</span>
+                <span class="marquee-item"><i class="ph-fill ph-house-line"></i> Door-to-door check-in</span>
+                <span class="marquee-item"><i class="ph-fill ph-thermometer-cold"></i> Climate-controlled cabins</span>
+                <span class="marquee-item"><i class="ph-fill ph-shield-check"></i> Vet-grade sanitization</span>
+                <span class="marquee-item"><i class="ph-fill ph-navigation-arrow"></i> Live GPS trip tracking</span>
+                <span class="marquee-item"><i class="ph-fill ph-certificate"></i> Pet CPR-certified drivers</span>
+                <span class="marquee-item"><i class="ph-fill ph-speaker-low"></i> Whisper-quiet acoustic vans</span>
+                <span class="marquee-item"><i class="ph-fill ph-house-line"></i> Door-to-door check-in</span>
+            </div>
+        </div>
+
+        <!-- Transport Cabin Zones -->
+        <section class="container">
+            <div class="section-header">
+                <span class="eyebrow reveal"><i class="ph-fill ph-van"></i> The Fleet</span>
+                <h2 class="reveal delay-1">Tailored pet travel cabins</h2>
+                <p class="lead-text reveal delay-2">Purpose-built transport interiors engineered for dogs, cats, and small companions to travel calm and secure.</p>
+            </div>
+
+            <div class="grid grid-3">
+                <div class="card reveal delay-1">
+                    <div class="card-media">
+                        <img src="https://images.unsplash.com/photo-1601758228041-f3b2795255f1?auto=format&fit=crop&w=900&q=80" alt="Caring handler escorting a dog for a veterinary visit"
+                            loading="lazy">
+                    </div>
+                    <div class="card-icon coral"><i class="ph-fill ph-first-aid-kit"></i></div>
+                    <h3>Vet &amp; Groomer Shuttle</h3>
+                    <p>Curbside pickup and gentle escort right into the veterinary clinic or grooming salon, with full wait-and-return service.</p>
+                </div>
+                <div class="card reveal delay-2">
+                    <div class="card-media">
+                        <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=900&q=80"
+                            alt="Calm cat resting in a quiet acoustic pet cabin" loading="lazy">
+                    </div>
+                    <div class="card-icon"><i class="ph-fill ph-speaker-low"></i></div>
+                    <h3>Calm Acoustic Cabin</h3>
+                    <p>Whisper-quiet insulated interiors, species-specific calming pheromones, and orthopedic memory-foam bedding for anxious pets.
+                    </p>
+                </div>
+                <div class="card reveal delay-3">
+                    <div class="card-media">
+                        <img src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=900&q=80"
+                            alt="Dogs safely harnessed for group shuttle transport" loading="lazy">
+                    </div>
+                    <div class="card-icon pink"><i class="ph-fill ph-shield-check"></i></div>
+                    <h3>Crash-Tested Suites</h3>
+                    <p>Secured Sleepypod harnesses, non-slip hydraulic boarding ramps, and spacious climate-monitored suites for every breed size.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================
+             INTERACTIVE: Live Dispatch & Cabin Telemetry Preview
+             ============================================================ -->
+        <section class="container" id="dispatch">
+            <div class="section-header">
+                <span class="eyebrow reveal"><i class="ph-fill ph-navigation-arrow"></i> Interactive Dispatch</span>
+                <h2 class="reveal delay-1">Preview your pet&rsquo;s live travel cabin</h2>
+                <p class="lead-text reveal delay-2">Select your companion and trip type to inspect the exact cabin telemetry, safety protocols, and pickup ETA our chauffeurs prepare before arrival.</p>
+            </div>
+
+            <div class="dispatch-sim reveal delay-2" data-dispatch-sim>
+                <!-- Controls -->
+                <div class="dispatch-controls">
+                    <div>
+                        <h3 style="margin-bottom:4px;">Trip configuration</h3>
+                        <p style="font-size:var(--size-caption); color:var(--color-text-muted);">Choose passenger profile, route type, and extra care protocols.</p>
+                    </div>
+
+                    <div>
+                        <div class="studio-group-label">1. Passenger profile</div>
+                        <div class="tool-row">
+                            <button class="tool-chip" type="button" data-sim-pet="dog-med" data-label="Medium Dog" data-price="29" aria-pressed="true"><i class="ph-fill ph-dog"></i> Dog (15&ndash;60 lbs)</button>
+                            <button class="tool-chip" type="button" data-sim-pet="senior" data-label="Senior / Post-Op" data-price="34" aria-pressed="false"><i class="ph-fill ph-first-aid"></i> Senior / Post-Op</button>
+                            <button class="tool-chip" type="button" data-sim-pet="cat" data-label="Cat / Small Pet" data-price="26" aria-pressed="false"><i class="ph-fill ph-cat"></i> Cat / Small Pet</button>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="studio-group-label">2. Destination type</div>
+                        <div class="tool-row">
+                            <button class="tool-chip" type="button" data-sim-trip="vet" data-price="12" data-eta="14 mins" aria-pressed="true"><i class="ph-fill ph-stethoscope"></i> Vet Wait &amp; Return</button>
+                            <button class="tool-chip" type="button" data-sim-trip="groom" data-price="0" data-eta="18 mins" aria-pressed="false"><i class="ph-fill ph-sparkle"></i> Grooming &amp; Spa</button>
+                            <button class="tool-chip" type="button" data-sim-trip="airport" data-price="25" data-eta="22 mins" aria-pressed="false"><i class="ph-fill ph-airplane-tilt"></i> Airport Transfer</button>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="studio-group-label">3. Safety &amp; comfort protocols</div>
+                        <div class="tool-row">
+                            <button class="tool-chip" type="button" data-sim-addon="harness" aria-pressed="true"><i class="ph-fill ph-shield-check"></i> Crash Harness</button>
+                            <button class="tool-chip" type="button" data-sim-addon="ramp" aria-pressed="false"><i class="ph-fill ph-stairs"></i> Hydraulic Ramp</button>
+                            <button class="tool-chip" type="button" data-sim-addon="cam" aria-pressed="false"><i class="ph-fill ph-video-camera"></i> Live HD Cam</button>
+                            <button class="tool-chip" type="button" data-sim-addon="acoustic" aria-pressed="false"><i class="ph-fill ph-speaker-low"></i> Quiet Mode</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Live Cabin Telemetry Stage -->
+                <div class="dispatch-stage">
+                    <div class="dispatch-stage-head">
+                        <div>
+                            <span style="font-size: var(--size-caption); color: rgba(230,242,238,0.68); display: block;">Assigned Vehicle</span>
+                            <strong style="font-size: 1.25rem; color: #fff;" data-sim-vehicle>Metro Pet Cruiser #04</strong>
+                        </div>
+                        <span class="dispatch-live-pill"><span class="dispatch-pulse"></span> Telemetry Ready</span>
+                    </div>
+
+                    <div class="telemetry-grid">
+                        <div class="telemetry-card">
+                            <span><i class="ph-fill ph-thermometer"></i> Cabin Climate</span>
+                            <strong data-sim-temp>68&deg;F Optimal</strong>
+                        </div>
+                        <div class="telemetry-card">
+                            <span><i class="ph-fill ph-speaker-low"></i> Cabin Acoustics</span>
+                            <strong data-sim-noise>40 dB Calm</strong>
+                        </div>
+                        <div class="telemetry-card">
+                            <span><i class="ph-fill ph-clock-countdown"></i> Pickup ETA</span>
+                            <strong data-sim-eta>14 mins</strong>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="studio-group-label" style="color: rgba(230,242,238,0.65);">Active Pre-Trip Safety Protocols</div>
+                        <div class="protocol-list">
+                            <div class="protocol-item is-on" data-sim-protocol="gps">
+                                <i class="ph-fill ph-navigation-arrow"></i>
+                                <span>Real-time GPS &amp; arrival photo link</span>
+                            </div>
+                            <div class="protocol-item is-on" data-sim-protocol="hepa">
+                                <i class="ph-fill ph-wind"></i>
+                                <span>HEPA filtration &amp; enzymatic sanitize</span>
+                            </div>
+                            <div class="protocol-item is-on" data-sim-protocol="harness">
+                                <i class="ph-fill ph-shield-check"></i>
+                                <span>Crash-tested Sleepypod restraint</span>
+                            </div>
+                            <div class="protocol-item" data-sim-protocol="ramp">
+                                <i class="ph-fill ph-stairs"></i>
+                                <span>Low-incline hydraulic boarding ramp</span>
+                            </div>
+                            <div class="protocol-item" data-sim-protocol="cam">
+                                <i class="ph-fill ph-video-camera"></i>
+                                <span>Live HD cabin camera stream</span>
+                            </div>
+                            <div class="protocol-item" data-sim-protocol="acoustic">
+                                <i class="ph-fill ph-speaker-low"></i>
+                                <span>Whisper-quiet pheromone cabin mode</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="summary-note" style="margin-top: 0;">
+                        <i class="ph-fill ph-info"></i>
+                        <span data-sim-note>Crash-tested Sleepypod harness ready; chauffeur shares live GPS &amp; arrival photo in your Dashboard.</span>
+                    </div>
+
+                    <div class="dispatch-stage-foot">
+                        <div>
+                            <span style="font-size: var(--size-caption); color: rgba(230,242,238,0.68); display: block;">Estimated Base Fare</span>
+                            <span class="summary-price" data-sim-price>$46</span>
+                        </div>
+                        <a href="dashboard.html" class="btn btn-primary">Book This Cabin Setup <i class="ph ph-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Why PawVoyage -->
+        <section class="container">
+            <div class="panel">
+                <div class="grid grid-2 items-center">
+                    <img class="reveal" src="https://images.unsplash.com/photo-1544568100-847a948585b9?auto=format&fit=crop&w=900&q=80"
+                        alt="Happy dog looking out of a climate-controlled pet transport vehicle"
+                        style="aspect-ratio: 4/3; object-fit: cover; border-radius: var(--radius-lg); box-shadow: var(--shadow-lg);">
+                    <div class="reveal delay-2 copy-center">
+                        <span class="eyebrow"><i class="ph-fill ph-heart"></i> The Care Standard</span>
+                        <h2>Engineered for calm, safe travel</h2>
+                        <p class="lead-text">Animal transport is more than getting from A to B &mdash; it is compassionate care in motion. Every vehicle in the PawVoyage fleet is outfitted with veterinary behaviourists.</p>
+                        <ul class="feature-list">
+                            <li><i class="ph-fill ph-check-circle"></i> Dual-zone HEPA air filtration &amp; live temperature telemetry</li>
+                            <li><i class="ph-fill ph-check-circle"></i> Low-incline hydraulic ramps for senior &amp; post-op pets</li>
+                            <li><i class="ph-fill ph-check-circle"></i> Real-time GPS tracking and photo updates in your owner portal</li>
+                        </ul>
+                        <a href="services.html" class="btn btn-secondary" style="margin-top: 16px;">Explore our fleet &amp; safety
+                            <i class="ph ph-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Highlights/Features -->
+        <section class="container">
+            <div class="section-header">
+                <span class="eyebrow reveal"><i class="ph-fill ph-seal-check"></i> Our Promise</span>
+                <h2 class="reveal delay-1">The PawVoyage standard</h2>
+                <p class="lead-text reveal delay-2">Why devoted pet owners trust us with their four-legged family members.</p>
+            </div>
+
+            <div class="grid grid-3">
+                <div class="card card-flat reveal delay-1">
+                    <div class="card-thumb">
+                        <img src="https://images.unsplash.com/photo-1576201836106-db1758fd1c97?auto=format&fit=crop&w=800&q=80"
+                            alt="Spotless, freshly sanitized pet transport cabin" loading="lazy">
+                        <span class="card-thumb-badge"><i class="ph-duotone ph-shield-check"
+                                style="color: var(--color-success);"></i></span>
+                    </div>
+                    <h4>Vet-Grade Sanitization</h4>
+                    <p style="font-size: var(--size-caption);">Pet-safe enzymatic disinfection and UV air purification between every single trip.
+                    </p>
+                </div>
+                <div class="card card-flat reveal delay-2">
+                    <div class="card-thumb">
+                        <img src="https://images.unsplash.com/photo-1537151608828-ea2b11777ee8?auto=format&fit=crop&w=800&q=80"
+                            alt="Puppy relaxing in a private solo travel suite" loading="lazy">
+                        <span class="card-thumb-badge"><i class="ph-duotone ph-paw-print"
+                                style="color: var(--color-primary);"></i></span>
+                    </div>
+                    <h4>Private Solo Suites</h4>
+                    <p style="font-size: var(--size-caption);">Individual climate-controlled suites so nervous or reactive pets never feel crowded.</p>
+                </div>
+
+                <div class="card card-flat reveal delay-4">
+                    <div class="card-thumb">
+                        <img src="https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&w=800&q=80"
+                            alt="Friendly golden retriever greeted by a certified pet handler" loading="lazy">
+                        <span class="card-thumb-badge"><i class="ph-duotone ph-first-aid"
+                                style="color: var(--color-accent);"></i></span>
+                    </div>
+                    <h4>Pet CPR-Certified Drivers</h4>
+                    <p style="font-size: var(--size-caption);">Every chauffeur is background-checked, animal-behaviour trained, and Pet First Aid certified.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials -->
+        <section class="container">
+            <div class="section-header">
+                <span class="eyebrow reveal"><i class="ph-fill ph-heart"></i> Pet Owners</span>
+                <h2 class="reveal delay-1">Loved by pets &amp; parents alike</h2>
+            </div>
+            <div class="grid grid-3">
+                <div class="card testimonial reveal delay-1">
+                    <div class="testimonial-stars" aria-label="Rated 5 out of 5">
+                        <i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i
+                            class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i>
+                    </div>
+                    <p>&ldquo;Absolute lifesaver for mid-week vet appointments. My rescue greyhound is usually terrified of cars, but the chauffeur used the ramp and sent me live photos the whole way.&rdquo;</p>
+                    <div class="testimonial-author">
+                        <img class="testimonial-avatar" src="assets/images/testimonial-avatar-sarah-t.jpg" alt=""
+                            loading="lazy">
+                        <div>
+                            <strong style="color: var(--color-primary);">Sarah T.</strong>
+                            <span>Dog mum of Barnaby</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card testimonial reveal delay-2">
+                    <div class="testimonial-stars" aria-label="Rated 5 out of 5">
+                        <i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i
+                            class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i>
+                    </div>
+                    <p>&ldquo;Unmatched professionalism. Being able to watch the live GPS tracker and cabin temperature on my dashboard while my two cats rode to the airport gave me total peace of mind.&rdquo;</p>
+                    <div class="testimonial-author">
+                        <img class="testimonial-avatar" src="assets/images/testimonial-avatar-mark-j.jpg" alt=""
+                            loading="lazy">
+                        <div>
+                            <strong style="color: var(--color-secondary);">Mark J.</strong>
+                            <span>Cat dad of two</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card testimonial reveal delay-3">
+                    <div class="testimonial-stars" aria-label="Rated 5 out of 5">
+                        <i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i
+                            class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i>
+                    </div>
+                    <p>&ldquo;We booked a private interstate charter when we relocated 300 miles away. They handled every comfort stop, hydration break, and door-to-door handoff flawlessly.&rdquo;</p>
+                    <div class="testimonial-author">
+                        <img class="testimonial-avatar" src="assets/images/testimonial-avatar-elena-r.jpg" alt=""
+                            loading="lazy">
+                        <div>
+                            <strong style="color: var(--color-accent);">Elena R.</strong>
+                            <span>Golden Retriever owner</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Banner -->
+        <section class="container">
+            <div class="cta-banner reveal">
+                <span class="eyebrow on-dark"><i class="ph-fill ph-calendar-check"></i> Dispatch Open 7 Days</span>
+                <h2>Ready for stress-free pet travel?</h2>
+                <p class="lead-text">Book a single door-to-door ride or grab a multi-trip commuter pass for regular vet and daycare visits.</p>
+                <div class="flex flex-wrap justify-center gap-2">
+                    <a href="pricing.html" class="btn btn-light btn-lg">See fares &amp; passes</a>
+                    <a href="contact.html" class="btn btn-lg"
+                        style="background: rgba(255,255,255,0.16); color:#fff; border-color: rgba(255,255,255,0.3);">Request
+                        a quote</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo">
+                        <i class="ph-fill ph-paw-print"></i> PawVoyage
+                    </a>
+                    <p>Caring, climate-controlled, and vet-approved door-to-door pet taxi and animal transport service.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link" aria-label="Instagram"><i
+                                class="ph-fill ph-instagram-logo"></i></a>
+                        <a href="#" class="social-link" aria-label="Facebook"><i
+                                class="ph-fill ph-facebook-logo"></i></a>
+                        <a href="#" class="social-link" aria-label="TikTok"><i class="ph-fill ph-tiktok-logo"></i></a>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="footer-heading">Explore</h4>
+                    <ul class="footer-links">
+                        <li><a href="pricing.html">Pricing</a></li>
+                        <li><a href="charter-rides.html">Charter Rides</a></li>
+                        <li><a href="our-story.html">Our Story</a></li>
+                        <li><a href="services.html">Services</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="footer-heading">Support</h4>
+                    <ul class="footer-links">
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="dashboard.html">Dashboard</a></li>
+                        <li><a href="login.html">Owner Login</a></li>
+                        <li><a href="register.html">Sign Up</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="footer-heading">Dispatch Hub</h4>
+                    <ul class="footer-links" style="color: var(--color-text-muted);">
+                        <li style="margin-bottom: 10px;"><i class="ph ph-map-pin"></i> 742 Evergreen Transit Way, Metro City</li>
+                        <li style="margin-bottom: 10px;"><i class="ph ph-phone"></i> (555) 234-PAWS</li>
+                        <li><i class="ph ph-clock"></i> Daily: 6am &ndash; 10pm (24/7 Vet Emergency)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 PawVoyage Pet Taxi &amp; Animal Transport Service. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="assets/js/main.js"></script>
+</body>
+
+</html>

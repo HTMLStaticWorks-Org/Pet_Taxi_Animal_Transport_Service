@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <defs>
+    <linearGradient id="pvGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#14968B"/>
+      <stop offset="52%" stop-color="#0F766E"/>
+      <stop offset="100%" stop-color="#D97724"/>
+    </linearGradient>
+    <filter id="badgeShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#0F766E" flood-opacity="0.35"/>
+    </filter>
+    <filter id="pawShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#0D1614" flood-opacity="0.22"/>
+    </filter>
+  </defs>
+
+  <!-- Squircle App Badge -->
+  <rect width="256" height="256" rx="64" fill="url(#pvGrad)" filter="url(#badgeShadow)"/>
+
+  <!-- Paw Print Emblem Centered -->
+  <g filter="url(#pawShadow)">
+    <!-- Main Pad -->
+    <path d="M128,132c-26,0-48,19-48,41,0,14,11,25,25,25,9,0,16-4,23-4s14,4,23,4c14,0,25-11,25-25C176,151,154,132,128,132Z" fill="#FFFFFF"/>
+    <!-- Toe Pads -->
+    <ellipse cx="74" cy="116" rx="16" ry="22" transform="rotate(-22 74 116)" fill="#FFFFFF"/>
+    <ellipse cx="106" cy="86" rx="16" ry="23" transform="rotate(-8 106 86)" fill="#FFFFFF"/>
+    <ellipse cx="150" cy="86" rx="16" ry="23" transform="rotate(8 150 86)" fill="#FFFFFF"/>
+    <ellipse cx="182" cy="116" rx="16" ry="22" transform="rotate(22 182 116)" fill="#FFFFFF"/>
+    <!-- Caring Heart Accent Inside Main Pad -->
+    <path d="M128,181c-1.5,0-3-0.6-4.2-1.7l-11.3-10.8c-4.4-4.2-4.4-11.1,0-15.3c4.1-3.9,10.5-3.9,14.6,0l0.9,0.9l0.9-0.9c4.1-3.9,10.5-3.9,14.6,0c4.4,4.2,4.4,11.1,0,15.3l-11.3,10.8C131,180.4,129.5,181,128,181Z" fill="#D97724"/>
+  </g>
+</svg>

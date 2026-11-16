@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PawVoyage | Coming Soon</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/rtl.css">
+    
+    <style>
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin: 40px 0;
+        }
+        .countdown-item {
+            background-color: var(--color-surface);
+            border-radius: var(--radius-base);
+            padding: 24px;
+            min-width: 100px;
+            box-shadow: var(--shadow-md), var(--shadow-inset-hairline);
+            border: 1px solid var(--color-border);
+        }
+        .countdown-value {
+            font-family: var(--font-display);
+            font-size: 3rem;
+            color: var(--color-primary);
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+        .countdown-label {
+            font-size: var(--size-caption);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--color-text-muted);
+        }
+        
+        @media (max-width: 768px) {
+            .countdown { gap: 12px; }
+            .countdown-item { min-width: 70px; padding: 16px; }
+            .countdown-value { font-size: 2rem; }
+            .countdown-label { font-size: 0.7rem; }
+        }
+    </style>
+</head>
+<body style="display: flex; flex-direction: column; min-height: 100vh; background-image: radial-gradient(48rem 32rem at 10% 12%, rgba(15,118,110,0.14), transparent 62%), radial-gradient(44rem 30rem at 90% 84%, rgba(217,119,36,0.14), transparent 62%);">
+    
+    <header class="header" style="background: transparent; border-bottom: none; box-shadow: none;">
+        <div class="container nav-container" style="justify-content: center;">
+            <a href="index.html" class="logo"><i class="ph-fill ph-paw-print"></i> PawVoyage</a>
+        </div>
+    </header>
+
+    <main style="flex: 1; display: flex; align-items: center; justify-content: center; text-align: center; padding: 40px 20px;">
+        <div style="max-width: 600px; width: 100%;">
+            
+            <h1 class="reveal delay-1" style="margin-bottom: 16px;">Our New Route is Almost Ready to Roll!</h1>
+            <p class="lead-text reveal delay-2">Our expanded climate-controlled pet taxi fleet is getting the final safety inspection. Be the first to know when dispatch opens in your neighborhood.</p>
+            
+            <div class="countdown reveal delay-3">
+                <div class="countdown-item">
+                    <div class="countdown-value" id="days">14</div>
+                    <div class="countdown-label">Days</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-value" id="hours">08</div>
+                    <div class="countdown-label">Hours</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-value" id="minutes">45</div>
+                    <div class="countdown-label">Mins</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-value" id="seconds">30</div>
+                    <div class="countdown-label">Secs</div>
+                </div>
+            </div>
+            
+            <div class="reveal delay-4" style="background: var(--color-surface); padding: 32px; border-radius: var(--radius-base); box-shadow: var(--shadow-hover);">
+                <h3 style="margin-bottom: 16px;">Join the Priority Dispatch List</h3>
+                <form class="needs-validation" novalidate style="display: flex; gap: 12px;">
+                    <div class="form-group" style="margin-bottom: 0; flex-grow: 1;">
+                        <input type="email" class="form-control" placeholder="Enter your email address" required style="width: 100%;">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Notify Me</button>
+                </form>
+                <p style="margin-top: 16px; margin-bottom: 0; font-size: var(--size-caption); color: var(--color-text-muted);">We respect your privacy. No spam, just safe pet travel updates.</p>
+            </div>
+            
+        </div>
+    </main>
+
+    <script src="assets/js/main.js"></script>
+    <script>
+        // Simple mock countdown
+        let time = 14 * 24 * 60 * 60 + 8 * 60 * 60 + 45 * 60 + 30; // 14d, 8h, 45m, 30s
+        const daysEl = document.getElementById('days');
+        const hoursEl = document.getElementById('hours');
+        const minsEl = document.getElementById('minutes');
+        const secsEl = document.getElementById('seconds');
+
+        setInterval(() => {
+            time--;
+            const d = Math.floor(time / (24*3600));
+            const h = Math.floor((time % (24*3600)) / 3600);
+            const m = Math.floor((time % 3600) / 60);
+            const s = time % 60;
+
+            if(daysEl) daysEl.innerText = d < 10 ? '0'+d : d;
+            if(hoursEl) hoursEl.innerText = h < 10 ? '0'+h : h;
+            if(minsEl) minsEl.innerText = m < 10 ? '0'+m : m;
+            if(secsEl) secsEl.innerText = s < 10 ? '0'+s : s;
+        }, 1000);
+    </script>
+</body>
+</html>

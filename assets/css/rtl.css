@@ -1,0 +1,152 @@
+/* ==========================================================================
+   PAWVOYAGE RTL STYLESHEET
+   Overrides for Right-to-Left languages (Arabic, Hebrew)
+   ========================================================================== */
+
+/* Apply logical properties overrides where necessary */
+[dir="rtl"] {
+  /* Text Direction */
+  text-align: right;
+  direction: rtl;
+}
+
+[dir="rtl"] .section-header,
+[dir="rtl"] .card,
+[dir="rtl"] .auth-divider,
+[dir="rtl"] .auth-card {
+  text-align: center; /* keep centered sections centered */
+}
+
+/* Forms */
+[dir="rtl"] .form-group {
+  text-align: right;
+}
+
+[dir="rtl"] .auth-divider::before { margin-right: 0; margin-left: 10px; }
+[dir="rtl"] .auth-divider::after { margin-left: 0; margin-right: 10px; }
+
+/* Navbar / Drawer */
+[dir="rtl"] .mobile-drawer {
+  right: auto;
+  left: 0;
+  transform: translateX(-105%);
+  border-left: none;
+  border-right: 1px solid var(--color-border);
+}
+
+[dir="rtl"] .mobile-drawer.open {
+  transform: none;
+}
+
+[dir="rtl"] .drawer-header {
+  flex-direction: row-reverse;
+}
+
+/* Icons within buttons and lists */
+[dir="rtl"] .btn i,
+[dir="rtl"] .feature-list i {
+  margin-right: 0;
+  margin-left: 8px; /* Reverse gap spacing */
+}
+
+/* Specific elements mirroring */
+[dir="rtl"] .blob-1 {
+  right: auto;
+  left: -100px;
+}
+
+[dir="rtl"] .blob-2 {
+  left: auto;
+  right: -50px;
+}
+
+/* Hero image swap */
+@media (min-width: 1025px) {
+  [dir="rtl"] .hero-image {
+    right: auto;
+    left: 5%;
+  }
+}
+
+/* Mobile drawer link hover indent mirrors */
+[dir="rtl"] .mobile-nav-link:hover,
+[dir="rtl"] .mobile-nav-link.active {
+  padding-left: 16px;
+  padding-right: 22px;
+}
+
+/* The active marker bar flips to the trailing edge */
+[dir="rtl"] .mobile-nav-link.active {
+  box-shadow: inset -3px 0 0 var(--color-primary);
+}
+
+/* Interactive modules */
+[dir="rtl"] .studio-panel,
+[dir="rtl"] .planner-step,
+[dir="rtl"] .option-card,
+[dir="rtl"] .feature-list,
+[dir="rtl"] .summary-note {
+  text-align: right;
+}
+
+[dir="rtl"] .option-card { align-items: flex-end; }
+
+[dir="rtl"] .marquee-track { animation-direction: reverse; }
+
+/* Eyebrow padding flips (it is asymmetric for the leading icon) */
+[dir="rtl"] .eyebrow { padding: 7px 12px 7px 16px; }
+
+/* Auth pages */
+[dir="rtl"] .field,
+[dir="rtl"] .field-label,
+[dir="rtl"] .auth-meta,
+[dir="rtl"] .auth-terms {
+  text-align: right;
+}
+
+/* The hover underline must grow from the right in RTL */
+[dir="rtl"] .link-brand { background-position: 100% 100%; }
+
+[dir="rtl"] .auth-back:hover i { transform: translateX(3px); }
+
+/* Toggle RTL Button - inherits .icon-btn styling from the core sheet */
+.rtl-toggle { cursor: pointer; }
+
+/* Date fields.
+   The value itself stays LTR - mm/dd/yyyy must not be reordered - but the
+   picker glyph belongs on the leading edge, which in RTL is the left. It is
+   absolutely positioned there and the field is padded to keep clear of it. */
+[dir="rtl"] input[type="date"],
+[dir="rtl"] input[type="time"],
+[dir="rtl"] input[type="datetime-local"],
+[dir="rtl"] input[type="month"] {
+  position: relative;
+  direction: ltr;
+  text-align: right;
+  padding-left: 52px;
+}
+
+[dir="rtl"] input[type="date"]::-webkit-calendar-picker-indicator,
+[dir="rtl"] input[type="time"]::-webkit-calendar-picker-indicator,
+[dir="rtl"] input[type="datetime-local"]::-webkit-calendar-picker-indicator,
+[dir="rtl"] input[type="month"]::-webkit-calendar-picker-indicator {
+  position: absolute;
+  left: 14px;
+  right: auto;
+  top: 50%;
+  transform: translateY(-50%);
+  margin: 0;
+}
+
+/* Home 2 hero word rotator.
+   The rotator is an inline-grid stacking every word in one cell, so its box
+   is always as wide as the longest word ("Discover."), and the shorter
+   active word leaves slack. In RTL the phrase reorders to put the rotator
+   first, which put that slack between the word and "Ready to" - the gap in
+   the middle of the headline. Aligning the word to the box's trailing edge
+   moves the slack to the outer end of the line, where the centred heading
+   absorbs it, exactly as it does on the LTR page. The heading still flips
+   with the rest of the page. */
+[dir="rtl"] .rotator {
+  text-align: right;
+}

@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PawVoyage | Charter Rides &amp; Pet Relocation</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/rtl.css">
+
+    <style>
+        /* FAQ Accordion Styling using HTML5 details */
+        details {
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-base);
+            padding: 16px 24px;
+            margin-bottom: 16px;
+            transition: box-shadow var(--transition-fast);
+        }
+
+        details:hover {
+            box-shadow: var(--shadow-soft);
+        }
+
+        summary {
+            font-weight: var(--weight-h4);
+            font-family: var(--font-heading);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            list-style: none;
+            /* Hide default arrow */
+            color: var(--color-primary);
+            font-size: 1.1rem;
+        }
+
+        summary::-webkit-details-marker {
+            display: none;
+        }
+
+        summary::after {
+            content: '+';
+            font-size: 1.5rem;
+            font-weight: 300;
+        }
+
+        details[open] summary::after {
+            content: '−';
+        }
+
+        details p {
+            margin-top: 16px;
+            margin-bottom: 0;
+            color: var(--color-text-muted);
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="header">
+        <div class="container nav-container">
+            <a href="index.html" class="logo"><i class="ph-fill ph-paw-print"></i> PawVoyage</a>
+            <nav class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="home2.html" class="nav-link">Home 2</a>
+                <a href="our-story.html" class="nav-link">Our Story</a>
+                <a href="services.html" class="nav-link">Services</a>
+                <a href="pricing.html" class="nav-link">Pricing</a>
+                <a href="charter-rides.html" class="nav-link active">Charter Rides</a>
+                <a href="contact.html" class="nav-link">Contact</a>
+                <a href="dashboard.html" class="nav-link">Dashboard</a>
+            </nav>
+            <div class="nav-actions">
+                <button class="icon-btn rtl-toggle" aria-label="Toggle RTL" title="Toggle Right-to-Left">
+                    <i class="ph ph-arrows-left-right"></i>
+                </button>
+                <div class="desktop-auth">
+                    <button class="icon-btn theme-toggle" aria-label="Toggle Dark Mode"><i
+                            class="ph ph-moon"></i></button>
+                    <a href="login.html" class="btn btn-primary">Login</a>
+                </div>
+                <button class="hamburger" aria-label="Menu"><i class="ph ph-list"></i></button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Drawer -->
+    <div class="drawer-overlay"></div>
+    <div class="mobile-drawer">
+        <div class="drawer-header">
+            <a href="index.html" class="logo"><i class="ph-fill ph-paw-print"></i> PawVoyage</a>
+            <button class="drawer-close" aria-label="Close Menu">
+                <i class="ph ph-x"></i>
+            </button>
+        </div>
+        <nav class="mobile-nav-links">
+            <a href="index.html" class="mobile-nav-link">Home</a>
+            <a href="home2.html" class="mobile-nav-link">Home 2</a>
+            <a href="our-story.html" class="mobile-nav-link">Our Story</a>
+            <a href="services.html" class="mobile-nav-link">Services</a>
+            <a href="pricing.html" class="mobile-nav-link">Pricing</a>
+            <a href="charter-rides.html" class="mobile-nav-link active" aria-current="page">Charter Rides</a>
+            <a href="contact.html" class="mobile-nav-link">Contact</a>
+            <a href="dashboard.html" class="mobile-nav-link">Dashboard</a>
+        </nav>
+        <div class="mobile-actions">
+            <button class="icon-btn theme-toggle" aria-label="Toggle Dark Mode">
+                <i class="ph ph-moon"></i>
+            </button>
+            <button class="icon-btn rtl-toggle" aria-label="Toggle RTL">
+                <i class="ph ph-arrows-left-right"></i>
+            </button>
+        </div>
+        <a href="login.html" class="btn btn-primary drawer-login"><i class="ph ph-sign-in"></i> Login</a>
+    </div>
+
+    <main class="page-main">
+
+        <section class="container">
+            <div class="section-header">
+                <span class="eyebrow"><i class="ph-fill ph-compass"></i> Private Charter</span>
+                <h1>Charter Rides &amp; Relocation</h1>
+                <p class="lead-text">Dedicated private vehicles for multi-stop city appointments, airport transfers, and long-distance interstate pet relocations.</p>
+            </div>
+
+            <!-- Charter Packages -->
+            <div class="grid grid-3">
+                <div class="card pricing-card">
+                    <h3>City Charter</h3>
+                    <p>Dedicated van by the hour</p>
+                    <div class="price">$145</div>
+                    <ul class="feature-list">
+                        <li><i class="ph-fill ph-check-circle"></i> 2 hours of private vehicle &amp; driver</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Up to 2 household pets</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Multi-stop vet or specialist visits</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Hydration &amp; comfort kit included</li>
+                    </ul>
+                    <a href="#inquire" class="btn btn-outline btn-full" style="margin-top: auto;">Inquire</a>
+                </div>
+
+                <div class="card pricing-card featured">
+                    <span class="featured-badge">Most Popular</span>
+                    <h3>Regional Express</h3>
+                    <p>Door-to-door up to 200 miles</p>
+                    <div class="price" style="color: var(--color-accent);">$390</div>
+                    <ul class="feature-list">
+                        <li><i class="ph-fill ph-check-circle"></i> Private climate-controlled sprinter</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Up to 3 household pets</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Comfort &amp; hydration walks every 90 mins</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Live HD cabin webcam stream</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Direct airport or new-home handoff</li>
+                    </ul>
+                    <a href="#inquire" class="btn btn-primary btn-full" style="margin-top: auto;">Inquire</a>
+                </div>
+
+                <div class="card pricing-card">
+                    <h3>VIP Interstate</h3>
+                    <p>Cross-state luxury relocation</p>
+                    <div class="price">$890</div>
+                    <ul class="feature-list">
+                        <li><i class="ph-fill ph-check-circle"></i> Full-day dedicated luxury pet sprinter</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Up to 4 household companions</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Two certified chauffeurs for non-stop care</li>
+                        <li><i class="ph-fill ph-check-circle"></i> USDA health certificate coordination</li>
+                        <li><i class="ph-fill ph-check-circle"></i> GPS telemetry &amp; hourly photo reports</li>
+                    </ul>
+                    <a href="#inquire" class="btn btn-outline btn-full" style="margin-top: auto;">Inquire</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gallery -->
+        <section class="container band">
+            <div class="section-header">
+                <h2>Charter Fleet Gallery</h2>
+                <p class="lead-text">From airport tarmac hand-offs to cross-country family moves</p>
+            </div>
+            <div class="grid grid-3 gallery-strip">
+                <img src="https://images.unsplash.com/photo-1544568100-847a948585b9?auto=format&fit=crop&w=800&q=80" alt="Dog enjoying window view in private charter">
+                <img src="https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?auto=format&fit=crop&w=800&q=80" alt="Golden retriever resting in luxury cabin">
+                <img src="https://images.unsplash.com/photo-1518791841217-8f162f1e1131?auto=format&fit=crop&w=800&q=80" alt="Cat travelling safely in climate-controlled suite">
+            </div>
+        </section>
+
+        <!-- Inquiry Form & FAQ Grid -->
+        <section id="inquire" class="container" style="padding-top: 80px;">
+            <div class="grid grid-2">
+                <!-- Form -->
+                <div>
+                    <h2>Request a Charter Ride</h2>
+                    <p class="lead-text" style="margin-bottom: 32px;">Share your route and pet details below. Our dispatch coordinator will reply within 4 hours.</p>
+
+                    <form class="needs-validation form-panel" novalidate action="https://formspree.io/f/placeholder"
+                        method="POST">
+
+                        <div class="field-row">
+                            <div class="field">
+                                <label class="field-label" for="party-parent">Pet owner name</label>
+                                <input id="party-parent" name="parent" type="text" class="form-control" required
+                                    autocomplete="name">
+                                <div class="error-message">Name is required</div>
+                            </div>
+                            <div class="field">
+                                <label class="field-label" for="party-email">Email</label>
+                                <input id="party-email" name="email" type="email" class="form-control" required
+                                    autocomplete="email">
+                                <div class="error-message">Valid email is required</div>
+                            </div>
+                        </div>
+
+                        <div class="field-row">
+                            <div class="field">
+                                <label class="field-label" for="party-phone">Phone</label>
+                                <input id="party-phone" name="phone" type="tel" class="form-control" required
+                                    autocomplete="tel">
+                                <div class="error-message">Phone is required</div>
+                            </div>
+                            <div class="field">
+                                <label class="field-label" for="party-child">Pet&rsquo;s name &amp; breed</label>
+                                <input id="party-child" name="child" type="text" class="form-control" required
+                                    placeholder="e.g. Barnaby, Golden Retriever">
+                                <div class="error-message">Required</div>
+                            </div>
+                        </div>
+
+                        <div class="field-row">
+                            <div class="field">
+                                <label class="field-label" for="party-date">Preferred travel date</label>
+                                <input id="party-date" name="date" type="date" class="form-control" required>
+                                <div class="error-message">Date is required</div>
+                            </div>
+                            <div class="field">
+                                <label class="field-label" for="party-guests">Number of pets</label>
+                                <input id="party-guests" name="guests" type="number" class="form-control" min="1"
+                                    max="6" placeholder="1" required>
+                                <div class="error-message">Pet count is required</div>
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label class="field-label" for="party-package">Charter tier</label>
+                            <select id="party-package" name="package" class="form-control" required>
+                                <option value="">Select a charter tier&hellip;</option>
+                                <option value="basic">City Charter &mdash; $145</option>
+                                <option value="deluxe">Regional Express &mdash; $390</option>
+                                <option value="premium">VIP Interstate Relocation &mdash; $890</option>
+                            </select>
+                            <div class="error-message">Charter selection is required</div>
+                        </div>
+
+                        <div class="field">
+                            <label class="field-label" for="party-notes">Pickup, destination &amp; care notes <span
+                                    style="text-transform: none; letter-spacing: 0;">(optional)</span></label>
+                            <textarea id="party-notes" name="notes" class="form-control"
+                                placeholder="Pickup city, destination, mobility needs, feeding schedule&hellip;"></textarea>
+                        </div>
+
+                        <div class="form-foot">
+                            <button type="submit" class="btn btn-primary">Send charter request <i
+                                    class="ph ph-arrow-right"></i></button>
+                            <p>We reply within 4 hours. No deposit taken yet.</p>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- FAQs -->
+                <div>
+                    <h2>Frequently Asked Questions</h2>
+                    <p class="lead-text" style="margin-bottom: 32px;">Everything you need to know about private pet charters and relocations.</p>
+
+                    <details>
+                        <summary>Are charter rides private to my household?</summary>
+                        <p>Yes. Every City Charter, Regional Express, and VIP Interstate trip is 100% exclusive to your household pets &mdash; we never mix unfamiliar animals on charter bookings.</p>
+                    </details>
+
+                    <details>
+                        <summary>Can I ride along with my pet?</summary>
+                        <p>Absolutely. Up to two human pet parents are welcome to ride in our comfortable passenger captain chairs at no extra charge on any private charter.</p>
+                    </details>
+
+                    <details>
+                        <summary>How often do you stop on long-distance trips?</summary>
+                        <p>Our chauffeurs stop every 90 to 120 minutes at safe, quiet green spaces for leashed relief walks, fresh water, and litter box checks, sending you a photo update at each stop.</p>
+                    </details>
+
+                    <details>
+                        <summary>What if my pet needs medication during transit?</summary>
+                        <p>All PawVoyage chauffeurs are trained in veterinary oral and topical medication administration and follow your exact schedule logged in the owner portal.</p>
+                    </details>
+
+                    <details>
+                        <summary>What is your rescheduling policy?</summary>
+                        <p>Flight delays happen! Airport and regional charters can be adjusted free of charge when you share your flight number, and interstate trips can be rescheduled up to 48 hours prior.</p>
+                    </details>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo">
+                        <i class="ph-fill ph-paw-print"></i> PawVoyage
+                    </a>
+                    <p>Caring, climate-controlled, and vet-approved door-to-door pet taxi and animal transport service.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link" aria-label="Instagram"><i
+                                class="ph-fill ph-instagram-logo"></i></a>
+                        <a href="#" class="social-link" aria-label="Facebook"><i
+                                class="ph-fill ph-facebook-logo"></i></a>
+                        <a href="#" class="social-link" aria-label="TikTok"><i class="ph-fill ph-tiktok-logo"></i></a>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="footer-heading">Explore</h4>
+                    <ul class="footer-links">
+                        <li><a href="pricing.html">Pricing</a></li>
+                        <li><a href="charter-rides.html">Charter Rides</a></li>
+                        <li><a href="our-story.html">Our Story</a></li>
+                        <li><a href="services.html">Services</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="footer-heading">Support</h4>
+                    <ul class="footer-links">
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="dashboard.html">Dashboard</a></li>
+                        <li><a href="login.html">Owner Login</a></li>
+                        <li><a href="register.html">Sign Up</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="footer-heading">Dispatch Hub</h4>
+                    <ul class="footer-links" style="color: var(--color-text-muted);">
+                        <li style="margin-bottom: 10px;"><i class="ph ph-map-pin"></i> 742 Evergreen Transit Way, Metro City</li>
+                        <li style="margin-bottom: 10px;"><i class="ph ph-phone"></i> (555) 234-PAWS</li>
+                        <li><i class="ph ph-clock"></i> Daily: 6am &ndash; 10pm (24/7 Vet Emergency)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 PawVoyage Pet Taxi &amp; Animal Transport Service. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+    <script>
+        // Disable past dates for charter picker
+        const dateInput = document.getElementById('party-date');
+        if (dateInput) {
+            dateInput.setAttribute('min', new Date().toISOString().split('T')[0]);
+        }
+    </script>
+</body>
+
+</html>
+
