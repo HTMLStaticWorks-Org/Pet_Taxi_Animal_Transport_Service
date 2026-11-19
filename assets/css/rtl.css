@@ -17,6 +17,10 @@
   text-align: center; /* keep centered sections centered */
 }
 
+[dir="rtl"] .card.blog-card {
+  text-align: right;
+}
+
 /* Forms */
 [dir="rtl"] .form-group {
   text-align: right;

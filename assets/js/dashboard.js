@@ -10,6 +10,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const sidebarLinks = document.querySelectorAll('.dashboard-nav-link');
   const sections = document.querySelectorAll('.dashboard-section');
 
+  const dashMenuBtn = document.querySelector('.dash-menu-toggle');
+  const dashboardSidebar = document.querySelector('.dashboard-sidebar');
+  const dashCloseBtn = document.querySelector('.dash-sidebar-close');
+
+  function setSidebarOpen(open) {
+    if (!dashboardSidebar) return;
+    dashboardSidebar.classList.toggle('open', open);
+    if (dashMenuBtn) dashMenuBtn.setAttribute('aria-expanded', String(open));
+  }
+
   if (sidebarLinks.length > 0 && sections.length > 0) {
     sidebarLinks.forEach(link => {
       link.addEventListener('click', (e) => {
@@ -33,10 +43,9 @@ document.addEventListener('DOMContentLoaded', () => {
           targetSection.classList.add('active');
         }
         
-        // On mobile, optionally close the sidebar if it was open (assuming a drawer style)
-        const sidebar = document.querySelector('.dashboard-sidebar');
-        if (window.innerWidth <= 1024 && sidebar && sidebar.classList.contains('open')) {
-          sidebar.classList.remove('open');
+        // On mobile, close the sidebar drawer after choosing a section
+        if (window.innerWidth <= 1024 && dashboardSidebar && dashboardSidebar.classList.contains('open')) {
+          setSidebarOpen(false);
         }
       });
     });
@@ -107,14 +116,35 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ------------------------------------------------------------------------
      3. Mobile Dashboard Sidebar Toggle
      ------------------------------------------------------------------------ */
-  const dashMenuBtn = document.querySelector('.dash-menu-toggle');
-  const dashboardSidebar = document.querySelector('.dashboard-sidebar');
-
   if (dashMenuBtn && dashboardSidebar) {
     dashMenuBtn.addEventListener('click', () => {
-      dashboardSidebar.classList.toggle('open');
+      setSidebarOpen(!dashboardSidebar.classList.contains('open'));
     });
   }
+
+  if (dashCloseBtn) {
+    dashCloseBtn.addEventListener('click', () => {
+      setSidebarOpen(false);
+    });
+  }
+
+  document.addEventListener('click', (e) => {
+    if (
+      window.innerWidth <= 1024 &&
+      dashboardSidebar &&
+      dashboardSidebar.classList.contains('open') &&
+      !dashboardSidebar.contains(e.target) &&
+      (!dashMenuBtn || !dashMenuBtn.contains(e.target))
+    ) {
+      setSidebarOpen(false);
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && dashboardSidebar && dashboardSidebar.classList.contains('open')) {
+      setSidebarOpen(false);
+    }
+  });
 
   /* ------------------------------------------------------------------------
      4. Top-bar Profile Menu

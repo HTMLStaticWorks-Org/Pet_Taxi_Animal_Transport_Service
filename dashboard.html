@@ -201,6 +201,23 @@
             transition: transform 0.3s ease;
         }
 
+        .dash-sidebar-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .dash-sidebar-close {
+            display: none;
+            transition: color var(--transition-fast), background-color var(--transition-fast);
+        }
+
+        .dash-sidebar-close:hover {
+            color: var(--color-primary);
+        }
+
         .dashboard-nav-link {
             display: flex;
             align-items: center;
@@ -459,6 +476,15 @@
             display: flex;
             flex-direction: column;
             flex: 1;
+        }
+
+        .excursion-body h4 {
+            min-height: 2.5em;
+            line-height: 1.25;
+        }
+
+        .excursion-body > p {
+            min-height: 4.8em;
         }
 
         .excursion-meta {
@@ -825,6 +851,10 @@
                 display: inline-flex;
             }
 
+            .dash-sidebar-close {
+                display: grid;
+            }
+
             .dash-bar-actions {
                 padding-inline: var(--spacing-3);
             }
@@ -898,7 +928,8 @@
         <div class="dash-bar">
             <!-- Brand column (matches sidebar width on desktop) -->
             <div class="dash-brand">
-                <button class="icon-btn dash-menu-toggle" aria-label="Toggle Dashboard Menu"><i
+                <button class="icon-btn dash-menu-toggle" aria-label="Toggle Dashboard Menu"
+                    aria-expanded="false" aria-controls="dashboard-sidebar"><i
                         class="ph ph-list"></i></button>
                 <a href="index.html" class="logo"><i class="ph-fill ph-paw-print"></i> PawVoyage</a>
             </div>
@@ -942,10 +973,15 @@
     <div class="dashboard-layout">
 
         <!-- Sidebar -->
-        <aside class="dashboard-sidebar">
-            <h4
-                style="margin-bottom: 24px; color: var(--color-text-muted); font-size: var(--size-caption); text-transform: uppercase;">
-                Dashboard</h4>
+        <aside class="dashboard-sidebar" id="dashboard-sidebar">
+            <div class="dash-sidebar-head">
+                <h4
+                    style="margin-bottom: 0; color: var(--color-text-muted); font-size: var(--size-caption); text-transform: uppercase;">
+                    Dashboard</h4>
+                <button type="button" class="drawer-close dash-sidebar-close" aria-label="Close Menu">
+                    <i class="ph ph-x"></i>
+                </button>
+            </div>
 
             <a href="#" class="dashboard-nav-link active" data-target="section-overview">
                 <i class="ph ph-squares-four"></i> Overview &amp; Tracking
@@ -1000,7 +1036,7 @@
                     </div>
                     <div class="stat-card">
                         <div class="icon"
-                            style="background-color: var(--color-secondary-soft); color: var(--color-secondary);"><i
+                            style="background-color: var(--color-primary-soft); color: var(--color-primary);"><i
                                 class="ph-fill ph-navigation-arrow"></i></div>
                         <div>
                             <p style="margin: 0; font-size: var(--size-caption); color: var(--color-text-muted);">Next
@@ -1010,7 +1046,7 @@
                     </div>
                     <div class="stat-card">
                         <div class="icon"
-                            style="background-color: var(--color-accent-soft); color: var(--color-accent);"><i
+                            style="background-color: var(--color-primary-soft); color: var(--color-primary);"><i
                                 class="ph-fill ph-shield-check"></i></div>
                         <div>
                             <p style="margin: 0; font-size: var(--size-caption); color: var(--color-text-muted);">
@@ -1128,7 +1164,7 @@
                     <div class="card"
                         style="align-items: center; justify-content: center; border: 2px dashed var(--color-border); background: transparent; cursor: pointer;">
                         <i class="ph ph-plus-circle"
-                            style="font-size: 3rem; color: var(--color-text-muted); margin-bottom: 16px;"></i>
+                            style="font-size: 3rem; color: var(--color-primary); margin-bottom: 16px;"></i>
                         <h4>Purchase New Ride Pass</h4>
                         <p style="color: var(--color-text-muted); font-size: var(--size-caption);">Top up rides or
                             start a monthly commuter plan</p>
@@ -1146,7 +1182,7 @@
                 <div class="grid grid-3">
                     <article class="card excursion-card">
                         <div class="excursion-media">
-                            <img src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=800&q=80" alt="Dog Beach & Trail Shuttle">
+                            <img src="https://www.rrccpetresort.com/wp-content/uploads/2026/04/hiking.jpg" alt="Dog Beach & Trail Shuttle">
                             <span class="excursion-badge">3 Suites Left</span>
                         </div>
                         <div class="excursion-body">
@@ -1166,7 +1202,7 @@
 
                     <article class="card excursion-card">
                         <div class="excursion-media">
-                            <img src="https://images.unsplash.com/photo-1534361960057-19889db9621e?auto=format&fit=crop&w=800&q=80" alt="Puppy Socialization Park Run">
+                            <img src="https://pawspace.in/wp-content/uploads/al_opt_content/IMAGE/pawspace.in/wp-content/uploads/2025/06/Untitled-design-23-1536.jpg.bv.webp" alt="Puppy Socialization Park Run">
                             <span class="excursion-badge" style="background: rgba(217, 119, 36, 0.9);">2 Suites Left</span>
                         </div>
                         <div class="excursion-body">
@@ -1186,7 +1222,7 @@
 
                     <article class="card excursion-card">
                         <div class="excursion-media">
-                            <img src="https://images.unsplash.com/photo-1544568100-847a948585b9?auto=format&fit=crop&w=800&q=80" alt="Senior Dog Gentle Botanical Stroll">
+                            <img src="https://static0.howtogeekimages.com/wordpress/wp-content/uploads/2026/05/happy-dog-in-a-car-with-their-head-out-the-window-2.jpg?w=1600&h=900&fit=crop" alt="Senior Dog Gentle Botanical Stroll">
                             <span class="excursion-badge" style="background: rgba(15, 118, 110, 0.9);">Ramp Van</span>
                         </div>
                         <div class="excursion-body">

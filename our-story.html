@@ -64,6 +64,8 @@
             box-shadow: var(--shadow-sm);
             height: 100%;
             width: 100%;
+            display: flex;
+            flex-direction: column;
         }
         .timeline-dot, .timeline-card {
             transition: transform var(--transition-bounce), box-shadow var(--transition-base), border-color var(--transition-base);
@@ -82,13 +84,13 @@
         /* Values: 4 across, 2x2 on tablet, stacked on phones; titles reserve
            two lines so every description starts at the same height. */
         .values-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-        .values-grid .card h4 { min-height: 2.5em; display: flex; align-items: center; justify-content: center; line-height: 1.25; }
+        .values-grid .card h4 { min-height: 2.5em; display: flex; align-items: flex-start; justify-content: center; line-height: 1.25; }
         @media (max-width: 1024px) { .values-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
         @media (max-width: 560px) {
             .values-grid { grid-template-columns: 1fr; }
             .values-grid .card h4 { min-height: 0; }
         }
-        .timeline-card h4 { margin: 6px 0 8px; min-height: 2.5em; line-height: 1.25; display: flex; align-items: center; justify-content: center; }
+        .timeline-card h4 { margin: 6px 0 8px; min-height: 2.5em; line-height: 1.25; display: flex; align-items: flex-start; justify-content: center; }
         .timeline-card p { margin: 0; font-size: var(--size-caption); color: var(--color-text-muted); }
         .timeline-year {
             font-family: var(--font-display);
@@ -160,21 +162,21 @@
         .team-card { display: flex; flex-direction: column; }
         .team-body { padding: var(--spacing-3) 8px 0; text-align: center; flex: 1; display: flex; flex-direction: column; }
         .team-body .team-fact { margin-top: auto; }
-        .team-body h4 { margin: 0 0 2px; font-size: 1.3rem; }
-        .team-role { margin: 0 0 12px; color: var(--tone); font-weight: 600; font-size: var(--size-caption); }
-        .team-bio { margin: 0 0 16px; color: var(--color-text-muted); font-size: 0.95rem; }
+        .team-body h4 { margin: 0 0 4px; font-size: 1.3rem; }
+        .team-role { margin: 0 0 12px; color: var(--tone); font-weight: 600; font-size: var(--size-caption); line-height: 1.45; min-height: 2.9em; }
+        .team-bio { margin: 0 0 16px; color: var(--color-text-muted); font-size: 0.95rem; line-height: 1.55; }
         .team-fact {
             margin: 0;
             padding-top: 12px;
             border-top: 1px dashed var(--color-border);
             font-size: var(--size-caption);
             color: var(--color-text-muted);
-            display: flex;
-            align-items: center;
-            gap: 6px;
+            line-height: 1.45;
+            min-height: calc(12px + 2 * 1.45em);
+            display: block;
+            text-align: center;
         }
-        .team-fact { justify-content: center; }
-        .team-fact i { color: var(--tone); }
+        .team-fact i { color: var(--tone); vertical-align: -0.1em; margin-inline-end: 5px; }
         /* Tablet: 2 across, the odd last card centred on its own row */
         @media (max-width: 900px) {
             .team-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -187,6 +189,7 @@
         @media (max-width: 560px) {
             .team-grid { grid-template-columns: 1fr; max-width: 400px; margin-inline: auto; }
             .team-card:last-child:nth-child(odd) { width: auto; justify-self: stretch; }
+            .team-role, .team-fact { min-height: 0; }
         }
         @media (prefers-reduced-motion: reduce) {
             .team-card:hover, .team-card:nth-child(2):hover, .team-card:hover .team-photo img { transform: none; }
@@ -259,10 +262,10 @@
             <div class="section-header">
                 <span class="eyebrow"><i class="ph-fill ph-heart"></i> Our Story</span>
                 <h1>Our Story &amp; Chauffeurs</h1>
-                <p class="lead-text">A vet-approved pet taxi and animal transport service built around how animals experience travel &mdash; through calm handling, climate comfort, and trust.</p>
+                <p class="lead-text">A vet-approved pet taxi and animal transport service built around how animals experience travel &mdash; through calm handling, climate comfort.</p>
             </div>
             <div class="zone-row">
-                <img src="https://images.unsplash.com/photo-1601758228041-f3b2795255f1?auto=format&fit=crop&w=1000&q=80" alt="PawVoyage founders caring for a happy dog before a trip"
+                <img src="https://vela-avenue.com/cdn/shop/files/car-seat-for-pets-pawvoyage-gray-nora_luxe.webp?v=1753686606" alt="PawVoyage founders caring for a happy dog before a trip"
                     style="width: 100%; border-radius: var(--radius-xl); box-shadow: var(--shadow-lg); aspect-ratio: 4 / 3; object-fit: cover;">
                 <div class="zone-copy" style="text-align: center;">
                     <span class="eyebrow"><i class="ph-fill ph-paw-print"></i> Who we are</span>
@@ -335,12 +338,12 @@
                     <p>No honking horns or hurried loading. Every ride starts with calm introductions so your pet boards willingly.</p>
                 </div>
                 <div class="card">
-                    <i class="ph-fill ph-shield-check" style="font-size: 2.5rem; color: var(--color-secondary); margin-bottom: 16px;"></i>
+                    <i class="ph-fill ph-shield-check" style="font-size: 2.5rem; color: var(--color-primary); margin-bottom: 16px;"></i>
                     <h4>Vet-grade safety</h4>
                     <p>Crash-tested harnesses, hospital-grade sanitization, and climate alarms keep every passenger protected.</p>
                 </div>
                 <div class="card">
-                    <i class="ph-fill ph-paw-print" style="font-size: 2.5rem; color: var(--color-accent); margin-bottom: 16px;"></i>
+                    <i class="ph-fill ph-paw-print" style="font-size: 2.5rem; color: var(--color-primary); margin-bottom: 16px;"></i>
                     <h4>Behaviour-led care</h4>
                     <p>Designed with animal behaviourists to eliminate road vibration, harsh noise, and visual triggers.</p>
                 </div>
@@ -372,7 +375,7 @@
                         <p class="team-fact"><i class="ph-fill ph-heart"></i> Favourite passenger: senior golden retrievers</p>
                     </div>
                 </article>
-                <article class="team-card" style="--tone: var(--color-secondary);">
+                <article class="team-card" style="--tone: var(--color-primary);">
                     <div class="team-photo">
                         <img src="assets/images/staff-avatar-sarah-j.jpg" alt="Sarah J." loading="lazy">
                         <span class="team-tag"><i class="ph-fill ph-paw-print"></i> Behaviour</span>
@@ -384,7 +387,7 @@
                         <p class="team-fact"><i class="ph-fill ph-heart"></i> Favourite passenger: shy rescue cats</p>
                     </div>
                 </article>
-                <article class="team-card" style="--tone: var(--color-accent);">
+                <article class="team-card" style="--tone: var(--color-primary);">
                     <div class="team-photo">
                         <img src="assets/images/staff-avatar-david-k.jpg" alt="David K." loading="lazy">
                         <span class="team-tag"><i class="ph-fill ph-shield-check"></i> Fleet</span>
