@@ -486,7 +486,7 @@ section { padding: var(--section-y) 0; }
 
 .btn-sm { padding: 10px 20px; min-height: 42px; font-size: 0.875rem; }
 .btn-lg { padding: 17px 38px; min-height: 58px; font-size: 1.0625rem; }
-.btn-full { width: 100%; }
+.btn-full { width: 100%; padding-inline: 20px; }
 
 /* --------------------------------------------------------------------------
    6. Cards
@@ -567,6 +567,7 @@ section { padding: var(--section-y) 0; }
   width: calc(100% + (var(--spacing-4) * 2));
   margin: calc(var(--spacing-4) * -1) calc(var(--spacing-4) * -1) 0;
   aspect-ratio: 16 / 10;
+  flex-shrink: 0;
   overflow: hidden;
   background-color: var(--color-surface-hover);
 }
@@ -594,6 +595,7 @@ section { padding: var(--section-y) 0; }
   position: relative;
   width: 100%;
   aspect-ratio: 4 / 3;
+  flex-shrink: 0;
   margin-bottom: var(--spacing-2);
   border-radius: var(--radius-sm);
   overflow: hidden;
@@ -2288,6 +2290,7 @@ input[type="date"]::-moz-calendar-picker-indicator {
 /* Own overflow context, so the zoom cannot creep over the caption */
 .tile-media {
   aspect-ratio: 16 / 10;
+  flex-shrink: 0;
   overflow: hidden;
   background-color: var(--color-surface-hover);
 }
@@ -2606,7 +2609,7 @@ input[type="date"]::-moz-calendar-picker-indicator {
 /* Tinted full-width band inside a container */
 .band {
   margin: var(--section-y) auto;
-  padding: clamp(32px, 5vw, 60px) clamp(24px, 4vw, 48px);
+  padding: clamp(32px, 5vw, 60px) clamp(16px, 4vw, 48px);
   background-image: linear-gradient(170deg, var(--color-surface-2), var(--color-bg-alt));
   border: 1px solid var(--color-border);
   border-radius: var(--radius-xl);
@@ -2664,12 +2667,15 @@ input[type="date"]::-moz-calendar-picker-indicator {
 }
 
 /* Equal horizontal alignment inside multi-column section cards via subgrid
-   so rows shrink tightly to actual line height without wasted empty space. */
-@media (min-width: 561px) {
+   so rows shrink tightly to actual line height without wasted empty space.
+   At 561px-768px (.grid-3 = 2 cols + 1 centered orphan), only Row 1 cards
+   share a subgrid while the orphan card uses normal flex layout so its image
+   and contents stay the exact width/height of its siblings above it. */
+@media (min-width: 769px) {
   .grid:has(> .card > .card-media),
   .grid:has(> .card > .card-thumb),
-  .grid:has(> .card > i + h4),
-  .grid:has(> .card > i + h3),
+  .grid:has(> .card > i + h4):not(:has(> .card:not(:has(> i + h4)))),
+  .grid:has(> .card > i + h3):not(:has(> .card:not(:has(> i + h3)))),
   .grid:has(> .tile),
   .grid-3:has(> .pricing-card) {
     row-gap: 0;
@@ -2687,8 +2693,8 @@ input[type="date"]::-moz-calendar-picker-indicator {
   }
 
   .grid:has(> .card > .card-thumb) > .card,
-  .grid:has(> .card > i + h4) > .card,
-  .grid:has(> .card > i + h3) > .card {
+  .grid:has(> .card > i + h4):not(:has(> .card:not(:has(> i + h4)))) > .card,
+  .grid:has(> .card > i + h3):not(:has(> .card:not(:has(> i + h3)))) > .card {
     display: grid;
     grid-template-rows: subgrid;
     grid-row: span 3;
@@ -2698,13 +2704,13 @@ input[type="date"]::-moz-calendar-picker-indicator {
     height: auto;
   }
 
-  .grid:has(> .card > i + h4) > .card > i,
-  .grid:has(> .card > i + h3) > .card > i {
+  .grid:has(> .card > i + h4):not(:has(> .card:not(:has(> i + h4)))) > .card > i,
+  .grid:has(> .card > i + h3):not(:has(> .card:not(:has(> i + h3)))) > .card > i {
     margin-bottom: 12px !important;
   }
 
-  .grid:has(> .card > i + h4) > .card > ul,
-  .grid:has(> .card > i + h3) > .card > ul {
+  .grid:has(> .card > i + h4):not(:has(> .card:not(:has(> i + h4)))) > .card > ul,
+  .grid:has(> .card > i + h3):not(:has(> .card:not(:has(> i + h3)))) > .card > ul {
     justify-self: stretch;
   }
 
@@ -2721,7 +2727,7 @@ input[type="date"]::-moz-calendar-picker-indicator {
   }
 
   .grid:has(> .tile) > .tile > .tile-caption h3 {
-    padding: 20px var(--spacing-4) 0;
+    padding: var(--spacing-3) var(--spacing-4) 0;
     margin-bottom: 8px;
     text-align: center;
   }
@@ -2745,20 +2751,7 @@ input[type="date"]::-moz-calendar-picker-indicator {
     align-self: end;
     margin-top: 0;
   }
-}
 
-@media (min-width: 561px) and (max-width: 768px) {
-  .grid-3:has(> .card > .card-media) > :nth-child(n+3),
-  .grid-3:has(> .card > .card-thumb) > :nth-child(n+3),
-  .grid-3:has(> .card > i + h4) > :nth-child(n+3),
-  .grid-3:has(> .card > i + h3) > :nth-child(n+3),
-  .grid-3:has(> .tile) > :nth-child(n+3),
-  .grid-3:has(> .pricing-card) > :nth-child(n+3) {
-    margin-top: var(--spacing-4);
-  }
-}
-
-@media (min-width: 769px) {
   /* Blog cards: align image, category kicker, title, and excerpt across columns */
   .blog-grid {
     row-gap: 0;
@@ -2777,6 +2770,126 @@ input[type="date"]::-moz-calendar-picker-indicator {
 
   .blog-grid > .blog-card > p {
     align-self: start;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .values-grid.grid-4 {
+    row-gap: var(--spacing-4);
+  }
+
+  .values-grid.grid-4 > .card {
+    display: flex;
+    flex-direction: column;
+    grid-row: auto;
+    height: 100%;
+  }
+}
+
+@media (min-width: 561px) and (max-width: 768px) {
+  .grid-3:has(> .card > .card-media),
+  .grid-3:has(> .card > .card-thumb),
+  .grid-3:has(> .card > i + h4):not(:has(> .card:not(:has(> i + h4)))),
+  .grid-3:has(> .card > i + h3):not(:has(> .card:not(:has(> i + h3)))),
+  .grid-3:has(> .tile),
+  .grid-3:has(> .pricing-card),
+  .blog-grid {
+    row-gap: 0;
+    align-items: stretch;
+  }
+
+  .grid-3:has(> .card > .card-media) > .card:not(:last-child:nth-child(odd)) {
+    display: grid;
+    grid-template-rows: subgrid;
+    grid-row: span 4;
+    row-gap: 0;
+    justify-items: center;
+    align-items: start;
+    height: auto;
+  }
+
+  .grid-3:has(> .card > .card-thumb) > .card:not(:last-child:nth-child(odd)),
+  .grid-3:has(> .card > i + h4):not(:has(> .card:not(:has(> i + h4)))) > .card:not(:last-child:nth-child(odd)),
+  .grid-3:has(> .card > i + h3):not(:has(> .card:not(:has(> i + h3)))) > .card:not(:last-child:nth-child(odd)) {
+    display: grid;
+    grid-template-rows: subgrid;
+    grid-row: span 3;
+    row-gap: 0;
+    justify-items: center;
+    align-items: start;
+    height: auto;
+  }
+
+  .grid-3:has(> .card > i + h4):not(:has(> .card:not(:has(> i + h4)))) > .card > i,
+  .grid-3:has(> .card > i + h3):not(:has(> .card:not(:has(> i + h3)))) > .card > i {
+    margin-bottom: 12px !important;
+  }
+
+  .grid-3:has(> .card > i + h4):not(:has(> .card:not(:has(> i + h4)))) > .card > ul,
+  .grid-3:has(> .card > i + h3):not(:has(> .card:not(:has(> i + h3)))) > .card > ul {
+    justify-self: stretch;
+  }
+
+  .grid-3:has(> .tile) > .tile:not(:last-child:nth-child(odd)) {
+    display: grid;
+    grid-template-rows: subgrid;
+    grid-row: span 3;
+    row-gap: 0;
+    height: auto;
+  }
+
+  .grid-3:has(> .tile) > .tile:not(:last-child:nth-child(odd)) > .tile-caption {
+    display: contents;
+  }
+
+  .grid-3:has(> .tile) > .tile:not(:last-child:nth-child(odd)) > .tile-caption h3 {
+    padding: var(--spacing-3) var(--spacing-4) 0;
+    margin-bottom: 8px;
+    text-align: center;
+  }
+
+  .grid-3:has(> .tile) > .tile:not(:last-child:nth-child(odd)) > .tile-caption p {
+    padding: 0 var(--spacing-4) var(--spacing-4);
+    text-align: center;
+  }
+
+  .grid-3:has(> .pricing-card) > .pricing-card:not(:last-child:nth-child(odd)) {
+    display: grid;
+    grid-template-rows: subgrid;
+    grid-row: span 5;
+    row-gap: 0;
+    justify-items: center;
+    align-items: start;
+    height: auto;
+  }
+
+  .grid-3:has(> .pricing-card) > .pricing-card:not(:last-child:nth-child(odd)) > .btn {
+    align-self: end;
+    margin-top: 0;
+  }
+
+  .blog-grid > .blog-card:not(:last-child:nth-child(odd)) {
+    display: grid;
+    grid-template-rows: subgrid;
+    grid-row: span 4;
+    row-gap: 0;
+    justify-items: stretch;
+    align-items: start;
+    height: auto;
+  }
+
+  .grid-3:has(> .card > .card-media) > :last-child:nth-child(odd),
+  .grid-3:has(> .card > .card-thumb) > :last-child:nth-child(odd),
+  .grid-3:has(> .card > i + h4):not(:has(> .card:not(:has(> i + h4)))) > :last-child:nth-child(odd),
+  .grid-3:has(> .card > i + h3):not(:has(> .card:not(:has(> i + h3)))) > :last-child:nth-child(odd),
+  .grid-3:has(> .tile) > :last-child:nth-child(odd),
+  .grid-3:has(> .pricing-card) > :last-child:nth-child(odd),
+  .blog-grid > :last-child:nth-child(odd) {
+    display: flex;
+    flex-direction: column;
+    grid-row: auto;
+    height: auto;
+    margin-top: var(--spacing-4);
   }
 }
 
@@ -2909,7 +3022,7 @@ input[type="date"]::-moz-calendar-picker-indicator {
 @media (max-width: 768px) {
   .footer-grid { grid-template-columns: repeat(2, 1fr); text-align: left; }
   .footer-brand { grid-column: auto; }
-  .grid-2, .grid-4 { grid-template-columns: 1fr; }
+  .grid-2, .grid-4 { grid-template-columns: minmax(0, 1fr); }
 
   /* Two across, with a lone final card centred over the two columns rather
      than stranded in the left one. Only fires on an odd number of children. */
@@ -2917,6 +3030,7 @@ input[type="date"]::-moz-calendar-picker-indicator {
 
   .grid-3 > :last-child:nth-child(odd) {
     grid-column: 1 / -1;
+    width: 100%;
     max-width: calc((100% - var(--spacing-4)) / 2);
     margin-inline: auto;
   }
@@ -2949,9 +3063,10 @@ input[type="date"]::-moz-calendar-picker-indicator {
 /* Must sit after the 768px block: same specificity, so source order decides */
 @media (max-width: 560px) {
   /* One per row, and the centred-orphan rule has to be undone */
-  .grid-3 { grid-template-columns: 1fr; }
+  .grid-3 { grid-template-columns: minmax(0, 1fr); }
   .grid-3 > :last-child:nth-child(odd) {
     grid-column: auto;
+    width: 100%;
     max-width: none;
     margin-inline: 0;
   }
@@ -3075,6 +3190,8 @@ body:has(.mobile-drawer.open) .back-to-top {
    -------------------------------------------------------------------------- */
 .gallery-strip img {
   width: 100%;
+  max-width: 100%;
+  min-width: 0;
   aspect-ratio: 4 / 3;
   object-fit: cover;
 }

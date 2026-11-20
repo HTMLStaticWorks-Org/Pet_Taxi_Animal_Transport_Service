@@ -85,9 +85,6 @@
            from the global subgrid rule in style.css with no extra empty lines. */
         .values-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
         @media (max-width: 1024px) { .values-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-        @media (min-width: 561px) and (max-width: 1024px) {
-            .values-grid > .card:nth-child(n+3) { margin-top: var(--spacing-4); }
-        }
         @media (max-width: 560px) {
             .values-grid { grid-template-columns: 1fr; }
         }
@@ -177,7 +174,7 @@
             text-align: center;
         }
         .team-fact i { color: var(--tone); vertical-align: -0.1em; margin-inline-end: 5px; }
-        @media (min-width: 561px) {
+        @media (min-width: 901px) {
             .team-grid { row-gap: 0; align-items: stretch; }
             .team-card {
                 display: grid;
@@ -198,6 +195,26 @@
                 grid-column: 1 / -1;
                 justify-self: center;
                 width: calc((100% - var(--spacing-4)) / 2);
+            }
+        }
+        @media (min-width: 561px) and (max-width: 900px) {
+            .team-grid { row-gap: 0; align-items: stretch; }
+            .team-card:not(:last-child:nth-child(odd)) {
+                display: grid;
+                grid-template-rows: subgrid;
+                grid-row: span 5;
+                row-gap: 0;
+                align-items: start;
+            }
+            .team-card:not(:last-child:nth-child(odd)) .team-body { display: contents; }
+            .team-card:not(:last-child:nth-child(odd)) .team-body h4 { padding: var(--spacing-3) 8px 0; }
+            .team-card:not(:last-child:nth-child(odd)) .team-role,
+            .team-card:not(:last-child:nth-child(odd)) .team-bio { padding-inline: 8px; }
+            .team-card:not(:last-child:nth-child(odd)) .team-fact { padding: 12px 8px 0; margin-top: 0; align-self: stretch; }
+            .team-card:last-child:nth-child(odd) {
+                display: flex;
+                flex-direction: column;
+                grid-row: auto;
                 margin-top: var(--spacing-4);
             }
         }

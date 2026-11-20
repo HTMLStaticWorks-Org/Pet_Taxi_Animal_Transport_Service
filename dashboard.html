@@ -439,6 +439,7 @@
             position: relative;
             aspect-ratio: 16 / 9;
             width: 100%;
+            flex-shrink: 0;
             overflow: hidden;
             background-color: var(--color-surface-hover);
         }
@@ -487,7 +488,7 @@
             color: var(--color-text-muted);
         }
 
-        @media (min-width: 561px) {
+        @media (min-width: 769px) {
             .grid-3:has(> .excursion-card) {
                 row-gap: 0;
                 align-items: stretch;
@@ -528,7 +529,49 @@
         }
 
         @media (min-width: 561px) and (max-width: 768px) {
-            .grid-3:has(> .excursion-card) > :nth-child(n+3) {
+            .grid-3:has(> .excursion-card) {
+                row-gap: 0;
+                align-items: stretch;
+            }
+
+            .grid-3:has(> .excursion-card) > .excursion-card:not(:last-child:nth-child(odd)) {
+                display: grid;
+                grid-template-rows: subgrid;
+                grid-row: span 5;
+                row-gap: 0;
+                align-items: start;
+                height: auto;
+            }
+
+            .grid-3:has(> .excursion-card) > .excursion-card:not(:last-child:nth-child(odd)) .excursion-body {
+                display: contents;
+            }
+
+            .grid-3:has(> .excursion-card) > .excursion-card:not(:last-child:nth-child(odd)) .excursion-body h4 {
+                padding: var(--spacing-3) var(--spacing-3) 0;
+                margin-bottom: 6px;
+            }
+
+            .grid-3:has(> .excursion-card) > .excursion-card:not(:last-child:nth-child(odd)) .excursion-body > p {
+                padding-inline: var(--spacing-3);
+            }
+
+            .grid-3:has(> .excursion-card) > .excursion-card:not(:last-child:nth-child(odd)) .excursion-meta {
+                padding-inline: var(--spacing-3);
+                margin: 12px 0 16px;
+            }
+
+            .grid-3:has(> .excursion-card) > .excursion-card:not(:last-child:nth-child(odd)) .excursion-foot {
+                padding: 14px var(--spacing-3) var(--spacing-3);
+                margin-top: 0;
+                align-self: end;
+            }
+
+            .grid-3:has(> .excursion-card) > .excursion-card:last-child:nth-child(odd) {
+                display: flex;
+                flex-direction: column;
+                grid-row: auto;
+                height: auto;
                 margin-top: var(--spacing-4);
             }
         }
