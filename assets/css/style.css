@@ -537,7 +537,7 @@ section { padding: var(--section-y) 0; }
 
 .card:hover::before { opacity: 1; }
 
-.card h3, .card h4 { margin-bottom: var(--spacing-2); }
+.card h3, .card h4 { margin-bottom: 10px; }
 .card p { color: var(--color-text-muted); }
 
 .card-icon,
@@ -554,7 +554,7 @@ section { padding: var(--section-y) 0; }
   align-items: center;
   justify-content: center;
   font-size: 1.85rem;
-  margin-bottom: var(--spacing-3);
+  margin-bottom: var(--spacing-2);
   box-shadow: var(--shadow-glow-primary), var(--shadow-inset-hairline);
   transition: transform var(--transition-bounce), border-radius var(--transition-bounce);
 }
@@ -594,7 +594,7 @@ section { padding: var(--section-y) 0; }
   position: relative;
   width: 100%;
   aspect-ratio: 4 / 3;
-  margin-bottom: var(--spacing-3);
+  margin-bottom: var(--spacing-2);
   border-radius: var(--radius-sm);
   overflow: hidden;
   background-color: var(--color-surface-hover);
@@ -1481,6 +1481,9 @@ input[type="date"]::-moz-calendar-picker-indicator {
   z-index: 2;
 }
 
+.pricing-card h3 { margin-bottom: 6px; }
+.pricing-card > p { margin-bottom: 12px; }
+
 .price {
   font-family: var(--font-display);
   font-size: clamp(2.5rem, 4vw, 3.25rem);
@@ -1489,7 +1492,7 @@ input[type="date"]::-moz-calendar-picker-indicator {
   letter-spacing: -0.04em;
   color: var(--color-ink);
   line-height: 1;
-  margin: var(--spacing-2) 0;
+  margin: 8px 0 12px;
 }
 
 .price span {
@@ -1504,6 +1507,10 @@ input[type="date"]::-moz-calendar-picker-indicator {
   text-align: left;
   margin: var(--spacing-3) 0;
   width: 100%;
+}
+
+.pricing-card .feature-list {
+  margin: 12px 0 20px;
 }
 
 /* Where the surrounding copy is centred, shrink the list to its own content
@@ -2656,44 +2663,72 @@ input[type="date"]::-moz-calendar-picker-indicator {
   .nav-actions .rtl-toggle { display: none; }
 }
 
-/* Equal horizontal alignment inside multi-column section cards */
+/* Equal horizontal alignment inside multi-column section cards via subgrid
+   so rows shrink tightly to actual line height without wasted empty space. */
 @media (min-width: 561px) {
-  .grid > .card:has(> .card-media) h3,
-  .grid > .tile .tile-caption h3 {
-    min-height: 2.35em;
-    line-height: 1.14;
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-  }
-
-  .grid > .card:has(> .card-thumb) h4,
-  .grid > .card > i + h4,
-  .grid > .card > i + h3 {
-    min-height: 2.5em;
-    line-height: 1.25;
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-  }
-
-  .grid-3:has(> .pricing-card) > .pricing-card h3 {
-    min-height: 2.35em;
-    line-height: 1.14;
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-  }
-
-  .grid-3:has(> .pricing-card) > .pricing-card > p {
-    min-height: 3.36em;
-  }
-}
-
-@media (min-width: 769px) {
+  .grid:has(> .card > .card-media),
+  .grid:has(> .card > .card-thumb),
+  .grid:has(> .card > i + h4),
+  .grid:has(> .card > i + h3),
+  .grid:has(> .tile),
   .grid-3:has(> .pricing-card) {
     row-gap: 0;
     align-items: stretch;
+  }
+
+  .grid:has(> .card > .card-media) > .card {
+    display: grid;
+    grid-template-rows: subgrid;
+    grid-row: span 4;
+    row-gap: 0;
+    justify-items: center;
+    align-items: start;
+    height: auto;
+  }
+
+  .grid:has(> .card > .card-thumb) > .card,
+  .grid:has(> .card > i + h4) > .card,
+  .grid:has(> .card > i + h3) > .card {
+    display: grid;
+    grid-template-rows: subgrid;
+    grid-row: span 3;
+    row-gap: 0;
+    justify-items: center;
+    align-items: start;
+    height: auto;
+  }
+
+  .grid:has(> .card > i + h4) > .card > i,
+  .grid:has(> .card > i + h3) > .card > i {
+    margin-bottom: 12px !important;
+  }
+
+  .grid:has(> .card > i + h4) > .card > ul,
+  .grid:has(> .card > i + h3) > .card > ul {
+    justify-self: stretch;
+  }
+
+  .grid:has(> .tile) > .tile {
+    display: grid;
+    grid-template-rows: subgrid;
+    grid-row: span 3;
+    row-gap: 0;
+    height: auto;
+  }
+
+  .grid:has(> .tile) > .tile > .tile-caption {
+    display: contents;
+  }
+
+  .grid:has(> .tile) > .tile > .tile-caption h3 {
+    padding: 20px var(--spacing-4) 0;
+    margin-bottom: 8px;
+    text-align: center;
+  }
+
+  .grid:has(> .tile) > .tile > .tile-caption p {
+    padding: 0 var(--spacing-4) var(--spacing-4);
+    text-align: center;
   }
 
   .grid-3:has(> .pricing-card) > .pricing-card {
@@ -2706,16 +2741,24 @@ input[type="date"]::-moz-calendar-picker-indicator {
     height: auto;
   }
 
-  .grid-3:has(> .pricing-card) > .pricing-card h3,
-  .grid-3:has(> .pricing-card) > .pricing-card > p {
-    min-height: 0;
-  }
-
   .grid-3:has(> .pricing-card) > .pricing-card > .btn {
     align-self: end;
     margin-top: 0;
   }
+}
 
+@media (min-width: 561px) and (max-width: 768px) {
+  .grid-3:has(> .card > .card-media) > :nth-child(n+3),
+  .grid-3:has(> .card > .card-thumb) > :nth-child(n+3),
+  .grid-3:has(> .card > i + h4) > :nth-child(n+3),
+  .grid-3:has(> .card > i + h3) > :nth-child(n+3),
+  .grid-3:has(> .tile) > :nth-child(n+3),
+  .grid-3:has(> .pricing-card) > :nth-child(n+3) {
+    margin-top: var(--spacing-4);
+  }
+}
+
+@media (min-width: 769px) {
   /* Blog cards: align image, category kicker, title, and excerpt across columns */
   .blog-grid {
     row-gap: 0;
@@ -2757,12 +2800,12 @@ input[type="date"]::-moz-calendar-picker-indicator {
   font-size: var(--size-caption);
   font-weight: var(--weight-bold-inline);
   text-transform: uppercase;
-  padding: 24px 24px 0;
+  padding: 20px 24px 0;
   display: block;
 }
 
 .blog-card h3 {
-  margin: 8px 0;
+  margin: 6px 0 8px;
   padding-inline: 24px;
   font-size: 1.5rem;
 }
@@ -2775,38 +2818,40 @@ input[type="date"]::-moz-calendar-picker-indicator {
 }
 
 /* Dispatch & FAQ paired columns alignment */
+.stack-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
 .split-align-cols > div:last-child > .card > .btn {
   margin-top: 24px;
 }
 
 @media (min-width: 769px) {
+  .split-align-cols {
+    row-gap: 0;
+    align-items: stretch;
+  }
+
   .split-align-cols > div {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-rows: subgrid;
+    grid-row: span 2;
+    row-gap: 0;
+    align-items: start;
   }
 
-  .split-align-cols > div > h2,
-  .split-align-cols > div > h3 {
-    min-height: 2.35em;
-    line-height: 1.14;
-  }
-
-  .split-align-cols > div > .lead-text {
-    min-height: 3.3em;
+  .split-align-cols.split-align-3 > div {
+    grid-row: span 3;
   }
 
   .split-align-cols > div:last-child > .card {
-    flex: 1;
+    height: 100%;
   }
 
   .split-align-cols > div:last-child > .card > .btn {
     margin-top: auto;
-  }
-}
-
-@media (min-width: 769px) and (max-width: 1199px) {
-  .split-align-cols > div > .lead-text {
-    min-height: 4.9em;
   }
 }
 

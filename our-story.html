@@ -81,16 +81,17 @@
         @media (prefers-reduced-motion: reduce) {
             .timeline-item:hover .timeline-card, .timeline-item:hover .timeline-dot { transform: none; }
         }
-        /* Values: 4 across, 2x2 on tablet, stacked on phones; titles reserve
-           two lines so every description starts at the same height. */
+        /* Values: 4 across, 2x2 on tablet, stacked on phones; alignment comes
+           from the global subgrid rule in style.css with no extra empty lines. */
         .values-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-        .values-grid .card h4 { min-height: 2.5em; display: flex; align-items: flex-start; justify-content: center; line-height: 1.25; }
         @media (max-width: 1024px) { .values-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+        @media (min-width: 561px) and (max-width: 1024px) {
+            .values-grid > .card:nth-child(n+3) { margin-top: var(--spacing-4); }
+        }
         @media (max-width: 560px) {
             .values-grid { grid-template-columns: 1fr; }
-            .values-grid .card h4 { min-height: 0; }
         }
-        .timeline-card h4 { margin: 6px 0 8px; min-height: 2.5em; line-height: 1.25; display: flex; align-items: flex-start; justify-content: center; }
+        .timeline-card h4 { margin: 4px 0 6px; min-height: 2.4em; line-height: 1.2; display: flex; align-items: flex-start; justify-content: center; }
         .timeline-card p { margin: 0; font-size: var(--size-caption); color: var(--color-text-muted); }
         .timeline-year {
             font-family: var(--font-display);
@@ -157,14 +158,14 @@
             text-transform: uppercase;
             box-shadow: var(--shadow-sm);
         }
-        /* Cards stretch to equal height and the fact line pins to the bottom,
-           so the bio and the divider line up across every card. */
+        /* Cards align via subgrid across every row so role, bio, dashed divider
+           and fact line match horizontally without forcing blank empty lines. */
         .team-card { display: flex; flex-direction: column; }
         .team-body { padding: var(--spacing-3) 8px 0; text-align: center; flex: 1; display: flex; flex-direction: column; }
         .team-body .team-fact { margin-top: auto; }
         .team-body h4 { margin: 0 0 4px; font-size: 1.3rem; }
-        .team-role { margin: 0 0 12px; color: var(--tone); font-weight: 600; font-size: var(--size-caption); line-height: 1.45; min-height: 2.9em; }
-        .team-bio { margin: 0 0 16px; color: var(--color-text-muted); font-size: 0.95rem; line-height: 1.55; }
+        .team-role { margin: 0 0 10px; color: var(--tone); font-weight: 600; font-size: var(--size-caption); line-height: 1.45; }
+        .team-bio { margin: 0 0 14px; color: var(--color-text-muted); font-size: 0.95rem; line-height: 1.55; }
         .team-fact {
             margin: 0;
             padding-top: 12px;
@@ -172,11 +173,24 @@
             font-size: var(--size-caption);
             color: var(--color-text-muted);
             line-height: 1.45;
-            min-height: calc(12px + 2 * 1.45em);
             display: block;
             text-align: center;
         }
         .team-fact i { color: var(--tone); vertical-align: -0.1em; margin-inline-end: 5px; }
+        @media (min-width: 561px) {
+            .team-grid { row-gap: 0; align-items: stretch; }
+            .team-card {
+                display: grid;
+                grid-template-rows: subgrid;
+                grid-row: span 5;
+                row-gap: 0;
+                align-items: start;
+            }
+            .team-body { display: contents; }
+            .team-body h4 { padding: var(--spacing-3) 8px 0; }
+            .team-role, .team-bio { padding-inline: 8px; }
+            .team-fact { padding: 12px 8px 0; margin-top: 0; align-self: stretch; }
+        }
         /* Tablet: 2 across, the odd last card centred on its own row */
         @media (max-width: 900px) {
             .team-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -184,12 +198,12 @@
                 grid-column: 1 / -1;
                 justify-self: center;
                 width: calc((100% - var(--spacing-4)) / 2);
+                margin-top: var(--spacing-4);
             }
         }
         @media (max-width: 560px) {
-            .team-grid { grid-template-columns: 1fr; max-width: 400px; margin-inline: auto; }
-            .team-card:last-child:nth-child(odd) { width: auto; justify-self: stretch; }
-            .team-role, .team-fact { min-height: 0; }
+            .team-grid { grid-template-columns: 1fr; max-width: 400px; margin-inline: auto; row-gap: var(--spacing-4); }
+            .team-card:last-child:nth-child(odd) { width: auto; justify-self: stretch; margin-top: 0; }
         }
         @media (prefers-reduced-motion: reduce) {
             .team-card:hover, .team-card:nth-child(2):hover, .team-card:hover .team-photo img { transform: none; }
